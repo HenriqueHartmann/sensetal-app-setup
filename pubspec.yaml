@@ -1,0 +1,37 @@
+name: sensetal_presentation_design_app
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.10+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: MyriadPro
+      fonts:
+        - asset: assets/fonts/MYRIADPRO/MyriadPro-Light.otf
+          weight: 300
+        - asset: assets/fonts/MYRIADPRO/MYRIADPRO-REGULAR.OTF
+        - asset: assets/fonts/MYRIADPRO/MYRIADPRO-SEMIBOLD.OTF
+          weight: 600
+        - asset: assets/fonts/MyriadPro/MyriadPro-Bold.OTF
+          weight: 700
+  assets:
+    - assets/icons/sensetal-icon.svg
