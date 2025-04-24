@@ -67,9 +67,9 @@ class _PageIndexState extends State<PageIndex>
                       );
                     },
                     child: SvgPicture.asset(
-                      AppIcons.sensetalLogo,
+                      AppIcons.sensetalIcon,
                       width: iconWidth,
-                      semanticsLabel: 'Sensetal logo',
+                      semanticsLabel: 'Sensetal icon',
                     ),
                   ),
                 ],
