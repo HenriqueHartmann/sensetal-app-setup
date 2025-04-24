@@ -25,8 +25,14 @@ ButtonStyle _getButtonStyle(BuildContext _) {
           ),
   );
 
+  final screenHeight = MediaQuery.of(_).size.height;
+
+  // Ideal height ratio based on 40px for 746px height ≈ 0.0536
+  final idealHeight = screenHeight * 0.0536;
+
   return ButtonStyle(
     backgroundColor: MaterialStateProperty.all(backgroundColor),
+    minimumSize: MaterialStateProperty.all(Size(double.infinity, idealHeight)),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
         horizontal: getSizeFromEnum(AppSpaceSize.md),
