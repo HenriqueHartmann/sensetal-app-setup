@@ -35,4 +35,5 @@ flutter:
           weight: 700
   assets:
     - assets/icons/sensetal-icon.svg
+    - assets/icons/sensetal-icon-2.svg
     - assets/icons/sensetal-logo.svg
