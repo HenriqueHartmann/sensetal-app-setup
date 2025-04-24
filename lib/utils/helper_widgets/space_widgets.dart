@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:sensetal_presentation_design_app/theme/space_size.dart';
+import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 
 /// Vertical spacing widget
 class VerticalSpace extends StatelessWidget {
-  final SpaceSize size;
+  final AppSpaceSize size;
   final double? custom;
 
   const VerticalSpace({
@@ -21,7 +21,7 @@ class VerticalSpace extends StatelessWidget {
 
 /// Horizontal spacing widget
 class HorizontalSpace extends StatelessWidget {
-  final SpaceSize size;
+  final AppSpaceSize size;
   final double? custom;
 
   const HorizontalSpace({
