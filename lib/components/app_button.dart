@@ -7,6 +7,11 @@ enum AppButtonOptions { solid, outline }
 class AppButton extends StatelessWidget {
   final String buttonText;
   final AppButtonOptions buttonType;
+  final VoidCallback? onPressCallback;
+
+  const AppButton(
+      {Key? key, required this.buttonText, required this.buttonType, this.onPressCallback})
+      : super(key: key);
 
 ButtonStyle _getButtonStyle(BuildContext _) {
   final isSolid = buttonType == AppButtonOptions.solid;
@@ -45,14 +50,10 @@ ButtonStyle _getButtonStyle(BuildContext _) {
   );
 }
 
-  const AppButton(
-      {Key? key, required this.buttonText, required this.buttonType})
-      : super(key: key);
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressCallback,
       style: _getButtonStyle(context),
       child: Text(buttonText,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(

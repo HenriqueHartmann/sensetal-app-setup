@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/pages/page_login.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -30,11 +31,11 @@ class _PageIndexState extends State<PageIndex> {
 
                   double logoWidth = screenWidth * 0.43;
                   double verticalGap = screenHeight > 800
-                      ? 142.0
+                      ? 150.0
                       : screenHeight > 600
                           ? screenHeight * 0.2
-                          : screenHeight * 0.08;
-                  double horizontalPadding = screenWidth < 400
+                          : screenHeight * 0.14;
+                  double horizontalPadding = screenWidth < 500
                       ? getSizeFromEnum(AppSpaceSize.md)
                       : screenWidth < 800
                           ? getSizeFromEnum(AppSpaceSize.xl)
@@ -85,17 +86,27 @@ class _PageIndexState extends State<PageIndex> {
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom, custom: verticalGap),
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               AppButton(
-                                  buttonText: 'Login',
-                                  buttonType: AppButtonOptions.solid),
-                              VerticalSpace(size: AppSpaceSize.md),
-                              AppButton(
-                                  buttonText: 'Criar minha conta',
-                                  buttonType: AppButtonOptions.outline)
+                                buttonText: 'Login',
+                                buttonType: AppButtonOptions.solid,
+                                onPressCallback: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PageLogin()),
+                                  );
+                                },
+                              ),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              const AppButton(
+                                buttonText: 'Criar minha conta',
+                                buttonType: AppButtonOptions.outline,
+                                onPressCallback: null,
+                              )
                             ],
                           ),
                         ],
