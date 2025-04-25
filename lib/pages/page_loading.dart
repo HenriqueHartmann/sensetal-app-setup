@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
-import 'package:sensetal_presentation_design_app/theme/blurred_background.dart';
+import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PageLoading extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/pages/page_index.dart';
 import 'package:sensetal_presentation_design_app/theme/app_theme.dart';
-import 'package:sensetal_presentation_design_app/theme/blurred_background.dart';
+import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
 
 void main() {
   runApp(const MyApp());
