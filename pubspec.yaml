@@ -34,6 +34,11 @@ flutter:
         - asset: assets/fonts/MyriadPro/MyriadPro-Bold.OTF
           weight: 700
   assets:
+    # Brand Icons
     - assets/icons/sensetal-icon.svg
     - assets/icons/sensetal-icon-2.svg
     - assets/icons/sensetal-logo.svg
+
+    # Icons
+    - assets/icons/sensetal-icon-eye-open.svg
+    - assets/icons/sensetal-icon-eye-closed.svg
