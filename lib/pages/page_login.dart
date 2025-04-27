@@ -72,6 +72,7 @@ class PageLoginState extends State<PageLogin> {
                               const LabeledInput(
                                 label: 'Senha',
                                 placeholder: 'Senha',
+                                showSuffixIcon: true,
                               ),
                               const VerticalSpace(size: AppSpaceSize.lg),
                               Text(
