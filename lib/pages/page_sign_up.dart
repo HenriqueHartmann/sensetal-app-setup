@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/components/custom_labeled_input.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -17,8 +18,32 @@ class PageSignUp extends StatefulWidget {
 }
 
 class _PageSignUpState extends State<PageSignUp> {
-  final TextEditingController otpController = TextEditingController();
-  final FocusNode otpFocusNode = FocusNode();
+  late TextEditingController _corporativeEmailController;
+  final int _corporativeCodeLenght = 5;
+  late List<TextEditingController> _corporativeCodeControllers;
+  late List<FocusNode> _corporativeCodeFocusNode;
+
+  @override
+  void initState() {
+    _corporativeEmailController = TextEditingController();
+    _corporativeCodeControllers = List.generate(
+        _corporativeCodeLenght, (index) => TextEditingController());
+    _corporativeCodeFocusNode =
+        List.generate(_corporativeCodeLenght, (index) => FocusNode());
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _corporativeEmailController.dispose();
+    for (var i = 0; i < _corporativeCodeLenght; i++) {
+      _corporativeCodeControllers[i].dispose();
+      _corporativeCodeFocusNode[i].dispose();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +93,7 @@ class _PageSignUpState extends State<PageSignUp> {
                           Column(
                             children: [
                               Text(
-                                'Atividade física e\nauto-cuidado dirigido',
+                                'Confirme seu vínculo com a empresa',
                                 style: Theme.of(context)
                                     .textTheme
                                     .displayMedium
@@ -78,7 +103,7 @@ class _PageSignUpState extends State<PageSignUp> {
                               ),
                               const VerticalSpace(size: AppSpaceSize.xs),
                               Text(
-                                'Alivie tensões e dores, melhore a sua postura\ne sinta maior disposição ao longo do dia',
+                                'Preencha seu e-mail corporativo e o código de acesso para desbloquear a criação da sua conta no Sensetal App',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -88,9 +113,7 @@ class _PageSignUpState extends State<PageSignUp> {
                               ),
                             ],
                           ),
-                          VerticalSpace(
-                              size: AppSpaceSize.custom,
-                              custom: innerVerticalGap),
+                          const VerticalSpace(size: AppSpaceSize.xl),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -99,37 +122,37 @@ class _PageSignUpState extends State<PageSignUp> {
                                 placeholder: 'E-mail',
                               ),
                               const VerticalSpace(size: AppSpaceSize.lg),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  OtpInputField(
-                                      controller: otpController,
-                                      focusNode: otpFocusNode),
-                                  const HorizontalSpace(size: AppSpaceSize.md),
-                                  OtpInputField(
-                                      controller: otpController,
-                                      focusNode: otpFocusNode),
-                                  const HorizontalSpace(size: AppSpaceSize.md),
-                                  OtpInputField(
-                                      controller: otpController,
-                                      focusNode: otpFocusNode),
-                                  const HorizontalSpace(size: AppSpaceSize.md),
-                                  OtpInputField(
-                                      controller: otpController,
-                                      focusNode: otpFocusNode),
-                                  const HorizontalSpace(size: AppSpaceSize.md),
-                                  OtpInputField(
-                                      controller: otpController,
-                                      focusNode: otpFocusNode),
-                                ],
-                              )
+                              CustomLabeledInput(
+                                label: 'Código da empresa',
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(
+                                    _corporativeCodeLenght,
+                                    (index) => Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        OtpInputField(
+                                          controller:
+                                              _corporativeCodeControllers[
+                                                  index],
+                                          focusNode:
+                                              _corporativeCodeFocusNode[index],
+                                        ),
+                                        if (index <
+                                            4)
+                                          const HorizontalSpace(
+                                              size: AppSpaceSize.md),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom,
                               custom: innerVerticalGap),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Precisa de ajuda?',
@@ -159,7 +182,7 @@ class _PageSignUpState extends State<PageSignUp> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               AppButton(
-                                buttonText: 'Continuar',
+                                buttonText: 'Confirmar vínculo',
                                 buttonType: AppButtonOptions.solid,
                                 onPressCallback: () {},
                               ),
