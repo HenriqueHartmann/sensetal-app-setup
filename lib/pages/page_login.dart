@@ -5,7 +5,7 @@ import 'package:sensetal_presentation_design_app/pages/page_sign_up.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
-import 'package:sensetal_presentation_design_app/utils/helper_widgets/labeled_input.dart';
+import 'package:sensetal_presentation_design_app/components/labeled_input.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 class PageLogin extends StatefulWidget {
