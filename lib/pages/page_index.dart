@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/pages/page_login.dart';
+import 'package:sensetal_presentation_design_app/pages/page_sign_up.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -102,10 +103,16 @@ class _PageIndexState extends State<PageIndex> {
                                 },
                               ),
                               const VerticalSpace(size: AppSpaceSize.md),
-                              const AppButton(
+                              AppButton(
                                 buttonText: 'Criar minha conta',
                                 buttonType: AppButtonOptions.outline,
-                                onPressCallback: null,
+                                onPressCallback: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PageSignUp()),
+                                  );
+                                },
                               )
                             ],
                           ),

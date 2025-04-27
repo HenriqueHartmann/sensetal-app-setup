@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/pages/page_sign_up.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -90,20 +91,26 @@ class PageLoginState extends State<PageLogin> {
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom, custom: verticalGap),
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              AppButton(
+                              const AppButton(
                                 buttonText: 'Login',
                                 buttonType: AppButtonOptions.solid,
                                 onPressCallback: null,
                               ),
-                              VerticalSpace(size: AppSpaceSize.md),
+                              const VerticalSpace(size: AppSpaceSize.md),
                               AppButton(
                                 buttonText: 'Criar minha conta',
                                 buttonType: AppButtonOptions.outline,
-                                onPressCallback: null,
+                              onPressCallback: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PageSignUp()),
+                                  );
+                                },
                               ),
                             ],
                           ),
