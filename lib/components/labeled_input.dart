@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sensetal_presentation_design_app/components/label_widget.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
@@ -34,25 +35,11 @@ class _LabeledInputState extends State<LabeledInput> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-
-    if (widget.controller != null) {
-      widget.controller!.dispose();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppColors.neutral03,
-              ),
-        ),
+        LabelWidget(label: widget.label),
         const VerticalSpace(size: AppSpaceSize.xs),
         Container(
           padding:
