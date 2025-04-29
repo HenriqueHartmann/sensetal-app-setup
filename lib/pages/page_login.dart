@@ -54,7 +54,7 @@ class PageLoginState extends State<PageLogin> {
                           Column(
                             children: [
                               SvgPicture.asset(
-                                AppIcons.sensetalLogo,
+                                AppIcons.brandSensetalLogo,
                                 width: logoWidth,
                                 semanticsLabel: 'Sensetal logo',
                               )

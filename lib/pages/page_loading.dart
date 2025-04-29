@@ -67,7 +67,7 @@ class _PageLoadingState extends State<PageLoading>
                       );
                     },
                     child: SvgPicture.asset(
-                      AppIcons.sensetalIcon,
+                      AppIcons.brandSensetalIconVariant,
                       width: iconWidth,
                       semanticsLabel: 'Sensetal icon',
                     ),

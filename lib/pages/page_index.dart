@@ -53,7 +53,7 @@ class _PageIndexState extends State<PageIndex> {
                           Column(
                             children: [
                               SvgPicture.asset(
-                                AppIcons.sensetalLogo,
+                                AppIcons.brandSensetalLogo,
                                 width: logoWidth,
                                 semanticsLabel: 'Sensetal logo',
                               )

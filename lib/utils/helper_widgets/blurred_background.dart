@@ -109,7 +109,7 @@ class BlurredBackground extends StatelessWidget {
           Positioned.fill(
             child: Center(
               child: SvgPicture.asset(
-                AppIcons.sensetalIcon2,
+                AppIcons.brandSensetalIcon,
                 width: iconWidth,
                 semanticsLabel: 'Sensetal icon',
                 // ignore: deprecated_member_use

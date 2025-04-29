@@ -75,7 +75,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                           Column(
                             children: [
                               SvgPicture.asset(
-                                AppIcons.sensetalLogo,
+                                AppIcons.brandSensetalLogo,
                                 width: logoWidth,
                                 semanticsLabel: 'Sensetal logo',
                               )

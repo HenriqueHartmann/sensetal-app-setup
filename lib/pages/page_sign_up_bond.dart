@@ -56,14 +56,8 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
               LayoutBuilder(
                 builder: (context, constraints) {
                   double screenWidth = constraints.maxWidth;
-                  double screenHeight = constraints.maxHeight;
 
                   double logoWidth = screenWidth * 0.43;
-                  double verticalGap = screenHeight > 800
-                      ? 150.0
-                      : screenHeight > 600
-                          ? screenHeight * 0.2
-                          : screenHeight * 0.14;
                   double horizontalPadding = screenWidth < 500
                       ? getSizeFromEnum(AppSpaceSize.md)
                       : screenWidth < 800
@@ -83,7 +77,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                           Column(
                             children: [
                               SvgPicture.asset(
-                                AppIcons.sensetalLogo,
+                                AppIcons.brandSensetalLogo,
                                 width: logoWidth,
                                 semanticsLabel: 'Sensetal logo',
                               )
