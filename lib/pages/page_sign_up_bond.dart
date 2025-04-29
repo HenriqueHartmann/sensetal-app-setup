@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/components/custom_labeled_input.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/components/labeled_input.dart';
+import 'package:sensetal_presentation_design_app/components/otp_input.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 class PageSignUpBond extends StatefulWidget {
@@ -54,8 +56,14 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
               LayoutBuilder(
                 builder: (context, constraints) {
                   double screenWidth = constraints.maxWidth;
+                  double screenHeight = constraints.maxHeight;
 
                   double logoWidth = screenWidth * 0.43;
+                  double verticalGap = screenHeight > 800
+                      ? 150.0
+                      : screenHeight > 600
+                          ? screenHeight * 0.2
+                          : screenHeight * 0.14;
                   double horizontalPadding = screenWidth < 500
                       ? getSizeFromEnum(AppSpaceSize.md)
                       : screenWidth < 800
@@ -85,7 +93,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                           Column(
                             children: [
                               Text(
-                                'Crie a sua conta',
+                                'Confirme seu vínculo com a empresa',
                                 style: Theme.of(context)
                                     .textTheme
                                     .displayMedium
@@ -93,11 +101,13 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                               ),
                               const VerticalSpace(size: AppSpaceSize.xs),
                               Text(
-                                'Informe seus dados e crie a senha que vai liberar seu acesso ao Sensetal App',
+                                'Preencha seu e-mail corporativo e o código de acesso para desbloquear a criação da sua conta no Sensetal App',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
-                                    ?.copyWith(color: AppColors.neutral03),
+                                    ?.copyWith(
+                                      color: AppColors.neutral03,
+                                    ),
                               ),
                             ],
                           ),
@@ -106,57 +116,60 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const LabeledInput(
-                                label: 'Nome completo',
-                                placeholder: 'Nome',
+                                label: 'E-mail corporativo',
+                                placeholder: 'E-mail',
                               ),
                               const VerticalSpace(size: AppSpaceSize.lg),
-                              const LabeledInput(
-                                label: 'Como você gostaria que te chamássemos',
-                                placeholder: 'Apelido',
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.xs),
-                              Text(
-                                'Digite o nome ou apelido pelo qual você prefere ser chamado(a). Isso nos ajuda a personalizar sua experiência!',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color: AppColors.neutral01,
+                              CustomLabeledInput(
+                                label: 'Código da empresa',
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(
+                                    _corporativeCodeLenght,
+                                    (index) => Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        OtpInputField(
+                                          controller:
+                                              _corporativeCodeControllers[
+                                                  index],
+                                          focusNode:
+                                              _corporativeCodeFocusNode[index],
+                                        ),
+                                        if (index < 4)
+                                          const HorizontalSpace(
+                                              size: AppSpaceSize.md),
+                                      ],
                                     ),
+                                  ),
+                                ),
                               ),
-                              const VerticalSpace(size: AppSpaceSize.lg),
-                              // TODO: Add disable feature
-                              const LabeledInput(
-                                label: 'Crie uma senha',
-                                placeholder: 'Informe uma senha',
-                                showSuffixIcon: true,
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.lg),
-                              const LabeledInput(
-                                label: 'Confirme a sua senha',
-                                placeholder: 'Informe novamente sua senha',
-                                showSuffixIcon: true,
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.lg),
-                              Text(
-                                'A sua senha deve ter:',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(color: AppColors.neutral01),
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.md),
-                              Row(
-                                children: [
-
-                                ],
-                              ),
-                              
                             ],
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom,
                               custom: innerVerticalGap),
+                          Column(
+                            children: [
+                              Text(
+                                'Precisa de ajuda?',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.neutral01),
+                              ),
+                              const VerticalSpace(size: AppSpaceSize.xs),
+                              Text(
+                                'Contate-nos',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        color: AppColors.primary02,
+                                        fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                           const VerticalSpace(
                               size: AppSpaceSize.custom, custom: 64.0),
                           Column(

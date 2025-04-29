@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/pages/page_login.dart';
-import 'package:sensetal_presentation_design_app/pages/page_sign_up.dart';
+import 'package:sensetal_presentation_design_app/pages/page_sign_up_bond.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -69,9 +69,7 @@ class _PageIndexState extends State<PageIndex> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .displayMedium
-                                    ?.copyWith(
-                                      color: AppColors.neutral01,
-                                    ),
+                                    ?.copyWith(color: AppColors.neutral01),
                               ),
                               const VerticalSpace(size: AppSpaceSize.xs),
                               Text(
@@ -79,9 +77,7 @@ class _PageIndexState extends State<PageIndex> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
-                                    ?.copyWith(
-                                      color: AppColors.neutral03,
-                                    ),
+                                    ?.copyWith(color: AppColors.neutral03),
                               ),
                             ],
                           ),
@@ -110,7 +106,7 @@ class _PageIndexState extends State<PageIndex> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const PageSignUp()),
+                                            const PageSignUpBond()),
                                   );
                                 },
                               )
