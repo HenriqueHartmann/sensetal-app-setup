@@ -8,14 +8,14 @@ import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/components/labeled_input.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
-class PageSignUpBond extends StatefulWidget {
-  const PageSignUpBond({super.key});
+class PageSignUp extends StatefulWidget {
+  const PageSignUp({super.key});
 
   @override
-  State<PageSignUpBond> createState() => _PageSignUpBondState();
+  State<PageSignUp> createState() => _PageSignUpState();
 }
 
-class _PageSignUpBondState extends State<PageSignUpBond> {
+class _PageSignUpState extends State<PageSignUp> {
   late TextEditingController _corporativeEmailController;
   final int _corporativeCodeLenght = 5;
   late List<TextEditingController> _corporativeCodeControllers;
@@ -56,13 +56,13 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                   double screenWidth = constraints.maxWidth;
 
                   double logoWidth = screenWidth * 0.43;
+                  double iconValidationWidth = screenWidth * 0.05;
+
                   double horizontalPadding = screenWidth < 500
                       ? getSizeFromEnum(AppSpaceSize.md)
                       : screenWidth < 800
                           ? getSizeFromEnum(AppSpaceSize.xl)
                           : getSizeFromEnum(AppSpaceSize.custom, 64.0);
-
-                  double innerVerticalGap = 64.0;
 
                   return SingleChildScrollView(
                     child: Padding(
@@ -83,6 +83,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                           ),
                           const VerticalSpace(size: AppSpaceSize.lg),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Crie a sua conta',
@@ -127,6 +128,11 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                               const VerticalSpace(size: AppSpaceSize.lg),
                               // TODO: Add disable feature
                               const LabeledInput(
+                                label: 'E-mail corporativo',
+                                placeholder: 'E-mail',
+                              ),
+                              const VerticalSpace(size: AppSpaceSize.lg),
+                              const LabeledInput(
                                 label: 'Crie uma senha',
                                 placeholder: 'Informe uma senha',
                                 showSuffixIcon: true,
@@ -137,7 +143,12 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                                 placeholder: 'Informe novamente sua senha',
                                 showSuffixIcon: true,
                               ),
-                              const VerticalSpace(size: AppSpaceSize.lg),
+                            ],
+                          ),
+                          const VerticalSpace(size: AppSpaceSize.lg),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
                                 'A sua senha deve ter:',
                                 style: Theme.of(context)
@@ -148,29 +159,99 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                               const VerticalSpace(size: AppSpaceSize.md),
                               Row(
                                 children: [
-
+                                  SvgPicture.asset(
+                                    AppIcons.systemSensetalIconCheckMark,
+                                    width: iconValidationWidth,
+                                    color: AppColors.success02,
+                                    semanticsLabel: 'Check Mark icon',
+                                  ),
+                                  const HorizontalSpace(size: AppSpaceSize.xxs),
+                                  Text(
+                                    'Mínimo de 8 caracteres',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: AppColors.neutral03),
+                                  ),
                                 ],
                               ),
-                              
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    AppIcons.systemSensetalIconCheckMark,
+                                    width: iconValidationWidth,
+                                    color: AppColors.success02,
+                                    semanticsLabel: 'Check Mark icon',
+                                  ),
+                                  const HorizontalSpace(size: AppSpaceSize.xxs),
+                                  Text(
+                                    '1 carácter maiúsculo',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: AppColors.neutral03),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    AppIcons.systemSensetalIconCheckMark,
+                                    width: iconValidationWidth,
+                                    color: AppColors.success02,
+                                    semanticsLabel: 'Check Mark icon',
+                                  ),
+                                  const HorizontalSpace(size: AppSpaceSize.xxs),
+                                  Text(
+                                    '1 número',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: AppColors.neutral03),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    AppIcons.systemSensetalIconCheckMark,
+                                    width: iconValidationWidth,
+                                    color: AppColors.error02,
+                                    semanticsLabel: 'X Circle icon',
+                                  ),
+                                  const HorizontalSpace(size: AppSpaceSize.xxs),
+                                  Text(
+                                    '1 carácter especial',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: AppColors.neutral03),
+                                  ),
+                                ],
+                              ),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              Text(
+                                'Quase lá! Ajuste sua senha para atender a todos os requisitos acima',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge
+                                    ?.copyWith(color: AppColors.neutral01),
+                              ),
                             ],
                           ),
-                          VerticalSpace(
-                              size: AppSpaceSize.custom,
-                              custom: innerVerticalGap),
-                          const VerticalSpace(
-                              size: AppSpaceSize.custom, custom: 64.0),
+                          const VerticalSpace(size: AppSpaceSize.lg),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               AppButton(
-                                buttonText: 'Confirmar vínculo',
+                                buttonText: 'Continuar',
                                 buttonType: AppButtonOptions.solid,
                                 onPressCallback: () {},
                               ),
                               const VerticalSpace(size: AppSpaceSize.md),
                               AppButton(
-                                buttonText: 'Acessar minha conta',
+                                buttonText: 'Cancelar',
                                 buttonType: AppButtonOptions.outline,
                                 onPressCallback: () {},
                               )

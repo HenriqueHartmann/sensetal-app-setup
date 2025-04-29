@@ -9,6 +9,7 @@ import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/components/labeled_input.dart';
 import 'package:sensetal_presentation_design_app/components/otp_input.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
+import 'package:sensetal_presentation_design_app/pages/page_sign_up.dart';
 
 class PageSignUpBond extends StatefulWidget {
   const PageSignUpBond({super.key});
@@ -173,7 +174,13 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                               AppButton(
                                 buttonText: 'Confirmar vínculo',
                                 buttonType: AppButtonOptions.solid,
-                                onPressCallback: () {},
+                              onPressCallback: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PageSignUp()),
+                                  );
+                                },
                               ),
                               const VerticalSpace(size: AppSpaceSize.md),
                               AppButton(
