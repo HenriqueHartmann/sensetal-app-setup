@@ -80,8 +80,8 @@ class _LabeledInputState extends State<LabeledInput> {
                           },
                           child: SvgPicture.asset(
                             isObscure
-                                ? AppIcons.sensetalIconEyeClosed
-                                : AppIcons.sensetalIconEyeOpen,
+                                ? AppIcons.systemSensetalIconEyeClosed
+                                : AppIcons.systemSensetalIconEyeOpen,
                             semanticsLabel: 'Sensetal icon for action',
                             // ignore: deprecated_member_use
                             color: AppColors.neutral03,

@@ -42,3 +42,5 @@ flutter:
     # Icons
     - assets/icons/system/sensetal-icon-eye-open.svg
     - assets/icons/system/sensetal-icon-eye-closed.svg
+    - assets/icons/system/sensetal-icon-check-circle.svg
+    - assets/icons/system/sensetal-icon-x-circle.svg
