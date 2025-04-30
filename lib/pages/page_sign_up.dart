@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/components/password_requirement_list.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -146,98 +147,21 @@ class _PageSignUpState extends State<PageSignUp> {
                             ],
                           ),
                           const VerticalSpace(size: AppSpaceSize.lg),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'A sua senha deve ter:',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(color: AppColors.neutral01),
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.md),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.systemSensetalIconCheckMark,
-                                    width: iconValidationWidth,
-                                    color: AppColors.success02,
-                                    semanticsLabel: 'Check Mark icon',
-                                  ),
-                                  const HorizontalSpace(size: AppSpaceSize.xxs),
-                                  Text(
-                                    'Mínimo de 8 caracteres',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: AppColors.neutral03),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.systemSensetalIconCheckMark,
-                                    width: iconValidationWidth,
-                                    color: AppColors.success02,
-                                    semanticsLabel: 'Check Mark icon',
-                                  ),
-                                  const HorizontalSpace(size: AppSpaceSize.xxs),
-                                  Text(
-                                    '1 carácter maiúsculo',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: AppColors.neutral03),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.systemSensetalIconCheckMark,
-                                    width: iconValidationWidth,
-                                    color: AppColors.success02,
-                                    semanticsLabel: 'Check Mark icon',
-                                  ),
-                                  const HorizontalSpace(size: AppSpaceSize.xxs),
-                                  Text(
-                                    '1 número',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: AppColors.neutral03),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.systemSensetalIconCheckMark,
-                                    width: iconValidationWidth,
-                                    color: AppColors.error02,
-                                    semanticsLabel: 'X Circle icon',
-                                  ),
-                                  const HorizontalSpace(size: AppSpaceSize.xxs),
-                                  Text(
-                                    '1 carácter especial',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: AppColors.neutral03),
-                                  ),
-                                ],
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.md),
-                              Text(
-                                'Quase lá! Ajuste sua senha para atender a todos os requisitos acima',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(color: AppColors.neutral01),
-                              ),
+                          PasswordRequirementList(
+                            title: 'A sua senha deve ter:',
+                            requirements: [
+                              PasswordRequirement(
+                                  label: 'Mínimo de 8 caracteres',
+                                  isValid: true),
+                              PasswordRequirement(
+                                  label: '1 carácter maiúsculo', isValid: true),
+                              PasswordRequirement(
+                                  label: '1 número', isValid: true),
+                              PasswordRequirement(
+                                  label: '1 carácter especial', isValid: false),
                             ],
+                            warningMessage:
+                                'Quase lá! Ajuste sua senha para atender a todos os requisitos acima',
                           ),
                           const VerticalSpace(size: AppSpaceSize.lg),
                           Column(
