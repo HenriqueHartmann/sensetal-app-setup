@@ -50,14 +50,10 @@ class _PageIndexState extends State<PageIndex> {
                       ),
                       child: Column(
                         children: [
-                          Column(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.brandSensetalLogo,
-                                width: logoWidth,
-                                semanticsLabel: 'Sensetal logo',
-                              )
-                            ],
+                          SvgPicture.asset(
+                            AppIcons.brandSensetalLogo,
+                            width: logoWidth,
+                            semanticsLabel: 'Sensetal logo',
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom, custom: verticalGap),

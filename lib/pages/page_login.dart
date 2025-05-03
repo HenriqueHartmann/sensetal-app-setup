@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/pages/page_imc.dart';
 import 'package:sensetal_presentation_design_app/pages/page_sign_up_bond.dart';
+import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -51,14 +53,10 @@ class PageLoginState extends State<PageLogin> {
                       ),
                       child: Column(
                         children: [
-                          Column(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.brandSensetalLogo,
-                                width: logoWidth,
-                                semanticsLabel: 'Sensetal logo',
-                              )
-                            ],
+                          SvgPicture.asset(
+                            AppIcons.brandSensetalLogo,
+                            width: logoWidth,
+                            semanticsLabel: 'Sensetal logo',
                           ),
                           VerticalSpace(
                               size: AppSpaceSize.custom, custom: verticalGap),
@@ -82,9 +80,7 @@ class PageLoginState extends State<PageLogin> {
                                     .textTheme
                                     .bodyMedium
                                     ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: AppColors.primary02,
                                         fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -95,16 +91,21 @@ class PageLoginState extends State<PageLogin> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              const AppButton(
+                              AppButton(
                                 buttonText: 'Login',
                                 buttonType: AppButtonOptions.solid,
-                                onPressCallback: null,
+                                onPressCallback: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => const PageIMC()),
+                                  );
+                                },
                               ),
                               const VerticalSpace(size: AppSpaceSize.md),
                               AppButton(
                                 buttonText: 'Criar minha conta',
                                 buttonType: AppButtonOptions.outline,
-                              onPressCallback: () {
+                                onPressCallback: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>

@@ -57,7 +57,6 @@ class _PageSignUpState extends State<PageSignUp> {
                   double screenWidth = constraints.maxWidth;
 
                   double logoWidth = screenWidth * 0.43;
-                  double iconValidationWidth = screenWidth * 0.05;
 
                   double horizontalPadding = screenWidth < 500
                       ? getSizeFromEnum(AppSpaceSize.md)
@@ -73,14 +72,10 @@ class _PageSignUpState extends State<PageSignUp> {
                       ),
                       child: Column(
                         children: [
-                          Column(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.brandSensetalLogo,
-                                width: logoWidth,
-                                semanticsLabel: 'Sensetal logo',
-                              )
-                            ],
+                          SvgPicture.asset(
+                            AppIcons.brandSensetalLogo,
+                            width: logoWidth,
+                            semanticsLabel: 'Sensetal logo',
                           ),
                           const VerticalSpace(size: AppSpaceSize.lg),
                           Column(

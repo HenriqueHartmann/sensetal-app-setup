@@ -75,14 +75,10 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                       ),
                       child: Column(
                         children: [
-                          Column(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.brandSensetalLogo,
-                                width: logoWidth,
-                                semanticsLabel: 'Sensetal logo',
-                              )
-                            ],
+                          SvgPicture.asset(
+                            AppIcons.brandSensetalLogo,
+                            width: logoWidth,
+                            semanticsLabel: 'Sensetal logo',
                           ),
                           const VerticalSpace(size: AppSpaceSize.lg),
                           Column(
@@ -174,7 +170,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
                               AppButton(
                                 buttonText: 'Confirmar vínculo',
                                 buttonType: AppButtonOptions.solid,
-                              onPressCallback: () {
+                                onPressCallback: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>
