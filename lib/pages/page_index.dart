@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
@@ -15,12 +17,51 @@ class PageIndex extends StatefulWidget {
 }
 
 class _PageIndexState extends State<PageIndex> {
+
+  /// Computes a responsive vertical gap based on the screen height.
+///
+/// This function returns a vertical spacing value that scales smoothly
+/// between two proportional ranges (20% to 25% of screen height), based
+/// on the device's height.
+///
+/// It is useful for spacing elements in a vertically responsive layout,
+/// ensuring consistent visual balance across phones, tablets, and foldables.
+///
+/// - For screens <= 500dp tall, it returns 20% of the height.
+/// - For screens >= 1200dp tall, it returns 25% of the height.
+/// - For anything in between, it linearly interpolates between the two.
+///
+/// Example usage:
+/// ```dart
+/// double verticalGap = computeVerticalGap(MediaQuery.of(context).size.height);
+/// SizedBox(height: verticalGap);
+/// ```
+///
+/// [screenHeight] — the current height of the screen in logical pixels (dp).
+///
+/// Returns a vertical gap in logical pixels (dp).
+  double computeVerticalGap(double screenHeight) {
+    const minDeviceHeight = 500.0;
+    const maxDeviceHeight = 1200.0;
+
+    final minGap = screenHeight * 0.2;
+    final maxGap = screenHeight * 0.25;
+
+    if (screenHeight <= minDeviceHeight) return minGap;
+    if (screenHeight >= maxDeviceHeight) return maxGap;
+
+    final t = ((screenHeight - minDeviceHeight) /
+        (maxDeviceHeight - minDeviceHeight));
+    return lerpDouble(minGap, maxGap, t)!;
+  }
+
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final padding = MediaQuery.of(context).padding;
+    final screenHeight =
+        MediaQuery.of(context).size.height - padding.top - padding.bottom;
 
-    double verticalGap =
-        screenWidth > 360 ? screenWidth * 0.35 : screenWidth * 0.17;
+    double verticalGap = computeVerticalGap(screenHeight);
 
     return SensetalScaffold(
       sensetalLogoIsMini: false,
