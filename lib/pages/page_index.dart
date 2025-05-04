@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
 import 'package:sensetal_presentation_design_app/pages/page_login.dart';
 import 'package:sensetal_presentation_design_app/pages/page_sign_up_bond.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
-import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
-import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
@@ -19,104 +17,71 @@ class PageIndex extends StatefulWidget {
 class _PageIndexState extends State<PageIndex> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlurredBackground(
-          showSensetalIcon: true,
-          child: Stack(
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double verticalGap =
+        screenWidth > 360 ? screenWidth * 0.35 : screenWidth * 0.17;
+
+    return SensetalScaffold(
+      sensetalLogoIsMini: false,
+      customVerticalPadding: getSizeFromEnum(AppSpaceSize.custom, 64.0),
+      child: Column(
+        children: [
+          VerticalSpace(
+            size: AppSpaceSize.custom,
+            custom: verticalGap,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  double screenWidth = constraints.maxWidth;
-                  double screenHeight = constraints.maxHeight;
-
-                  double logoWidth = screenWidth * 0.43;
-                  double verticalGap = screenHeight > 800
-                      ? 150.0
-                      : screenHeight > 600
-                          ? screenHeight * 0.2
-                          : screenHeight * 0.14;
-                  double horizontalPadding = screenWidth < 500
-                      ? getSizeFromEnum(AppSpaceSize.md)
-                      : screenWidth < 800
-                          ? getSizeFromEnum(AppSpaceSize.xl)
-                          : getSizeFromEnum(AppSpaceSize.custom, 64.0);
-
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPadding,
-                        vertical: getSizeFromEnum(AppSpaceSize.custom, 64.0),
-                      ),
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.brandSensetalLogo,
-                            width: logoWidth,
-                            semanticsLabel: 'Sensetal logo',
-                          ),
-                          VerticalSpace(
-                              size: AppSpaceSize.custom, custom: verticalGap),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Atividade física e\nauto-cuidado dirigido',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(color: AppColors.neutral01),
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.xs),
-                              Text(
-                                'Alivie tensões e dores, melhore a sua postura\ne sinta maior disposição ao longo do dia',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(color: AppColors.neutral03),
-                              ),
-                            ],
-                          ),
-                          VerticalSpace(
-                              size: AppSpaceSize.custom, custom: verticalGap),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              AppButton(
-                                buttonText: 'Login',
-                                buttonType: AppButtonOptions.solid,
-                                onPressCallback: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const PageLogin()),
-                                  );
-                                },
-                              ),
-                              const VerticalSpace(size: AppSpaceSize.md),
-                              AppButton(
-                                buttonText: 'Criar minha conta',
-                                buttonType: AppButtonOptions.outline,
-                                onPressCallback: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const PageSignUpBond()),
-                                  );
-                                },
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+              Text(
+                'Atividade física e\nauto-cuidado dirigido',
+                style: Theme.of(context)
+                    .textTheme
+                    .displayMedium
+                    ?.copyWith(color: AppColors.neutral01),
+              ),
+              const VerticalSpace(size: AppSpaceSize.xs),
+              Text(
+                'Alivie tensões e dores, melhore a sua postura\ne sinta maior disposição ao longo do dia',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppColors.neutral03),
+              ),
+            ],
+          ),
+          VerticalSpace(size: AppSpaceSize.custom, custom: verticalGap),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AppButton(
+                buttonText: 'Login',
+                buttonType: AppButtonOptions.solid,
+                onPressCallback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PageLogin(),
                     ),
                   );
                 },
               ),
+              const VerticalSpace(size: AppSpaceSize.md),
+              AppButton(
+                buttonText: 'Criar minha conta',
+                buttonType: AppButtonOptions.outline,
+                onPressCallback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PageSignUpBond(),
+                    ),
+                  );
+                },
+              )
             ],
           ),
-        ),
+        ],
       ),
     );
   }
