@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
+import 'package:sensetal_presentation_design_app/components/step_indicator.dart';
 import 'package:sensetal_presentation_design_app/components/value_selector.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
@@ -48,17 +49,19 @@ class _PageIMCState extends State<PageIMC> {
 
                   double logoWidth = screenWidth * 0.43;
 
-                  double horizontalPadding = screenWidth < 500
+                  double horizontalPadding = screenWidth < 360
                       ? getSizeFromEnum(AppSpaceSize.md)
                       : screenWidth < 800
-                          ? getSizeFromEnum(AppSpaceSize.xl)
-                          : getSizeFromEnum(AppSpaceSize.custom, 64.0);
+                          ? getSizeFromEnum(AppSpaceSize.lg)
+                          : getSizeFromEnum(AppSpaceSize.xxl);
 
                   return SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPadding,
-                        vertical: getSizeFromEnum(AppSpaceSize.custom, 64.0),
+                      padding: EdgeInsets.only(
+                        left: horizontalPadding,
+                        right: horizontalPadding,
+                        top: getSizeFromEnum(AppSpaceSize.lg),
+                        bottom: getSizeFromEnum(AppSpaceSize.custom, 64.0),
                       ),
                       child: Column(
                         children: [
@@ -68,7 +71,23 @@ class _PageIMCState extends State<PageIMC> {
                             semanticsLabel: 'Sensetal logo',
                           ),
                           const VerticalSpace(size: AppSpaceSize.xl),
-                          // TODO: COMPONENT FORM INDICATION PROGRESS
+                          const StepIndicatorRow(
+                            steps: [
+                              StepIndicatorData(
+                                label: 'Cadastro',
+                                progress: 1.0,
+                              ),
+                              StepIndicatorData(
+                                label: 'Anamnese',
+                                progress: 0.4,
+                              ),
+                              StepIndicatorData(
+                                label: 'Dores',
+                                progress: 0.0,
+                              ),
+                            ],
+                          ),
+                          const VerticalSpace(size: AppSpaceSize.xl),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -90,9 +109,9 @@ class _PageIMCState extends State<PageIMC> {
                             ],
                           ),
                           const VerticalSpace(size: AppSpaceSize.xl),
-                          // TODO: IMC FORM
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
