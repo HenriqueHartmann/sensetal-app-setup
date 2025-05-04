@@ -51,7 +51,7 @@ class _PageSignUpBondState extends State<PageSignUpBond> {
     return Scaffold(
       body: SafeArea(
         child: BlurredBackground(
-          showSensetalIcon: true,
+          showSensetalIconInBackground: true,
           child: Stack(
             children: [
               LayoutBuilder(

@@ -82,11 +82,11 @@ class BottomRightBlurredBackgroundPainter extends CustomPainter {
 }
 
 class BlurredBackground extends StatelessWidget {
-  final bool showSensetalIcon;
+  final bool showSensetalIconInBackground;
   final Widget child;
 
   const BlurredBackground(
-      {this.showSensetalIcon = false, required this.child, super.key});
+      {this.showSensetalIconInBackground = false, required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class BlurredBackground extends StatelessWidget {
             painter: BottomRightBlurredBackgroundPainter(),
           ),
         ),
-        if (showSensetalIcon)
+        if (showSensetalIconInBackground)
           Positioned.fill(
             child: Center(
               child: SvgPicture.asset(

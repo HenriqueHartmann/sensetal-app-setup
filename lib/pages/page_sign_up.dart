@@ -49,7 +49,7 @@ class _PageSignUpState extends State<PageSignUp> {
     return Scaffold(
       body: SafeArea(
         child: BlurredBackground(
-          showSensetalIcon: true,
+          showSensetalIconInBackground: true,
           child: Stack(
             children: [
               LayoutBuilder(

@@ -23,7 +23,7 @@ class PageLoginState extends State<PageLogin> {
     return Scaffold(
       body: SafeArea(
         child: BlurredBackground(
-          showSensetalIcon: true,
+          showSensetalIconInBackground: true,
           child: Stack(
             children: [
               LayoutBuilder(
