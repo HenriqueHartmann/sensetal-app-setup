@@ -31,7 +31,7 @@ class SensetalScaffold extends StatelessWidget {
               double screenWidth = constraints.maxWidth;
 
               double logoWidth =
-                  sensetalLogoIsMini ? screenWidth * 0.27 : screenWidth * 0.43;
+                  sensetalLogoIsMini ? screenWidth * 0.3 : screenWidth * 0.43;
 
               double horizontalPadding = screenWidth < 360
                   ? getSizeFromEnum(AppSpaceSize.md)
