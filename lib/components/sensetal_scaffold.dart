@@ -9,6 +9,7 @@ class SensetalScaffold extends StatelessWidget {
   final bool showSensetalLogoInTop;
   final bool sensetalLogoIsMini;
   final bool showSensetalIconInBackground;
+  final bool showBlur;
   final double? customVerticalPadding;
 
   const SensetalScaffold({
@@ -18,6 +19,7 @@ class SensetalScaffold extends StatelessWidget {
     this.sensetalLogoIsMini = true,
     this.showSensetalIconInBackground = true,
     this.customVerticalPadding,
+    this.showBlur = true,
   });
 
   @override
@@ -25,6 +27,7 @@ class SensetalScaffold extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlurredBackground(
+          showBlur: this.showBlur,
           showSensetalIconInBackground: showSensetalIconInBackground,
           child: LayoutBuilder(
             builder: (context, constraints) {
