@@ -15,6 +15,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.10+1
 
+  fl_chart: ^0.71.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -44,3 +46,7 @@ flutter:
     - assets/icons/system/sensetal-icon-eye-closed.svg
     - assets/icons/system/sensetal-icon-check-circle.svg
     - assets/icons/system/sensetal-icon-x-circle.svg
+
+    # Images
+    - assets/images/corpo.svg
+    - assets/images/bg_treino_ajuda.png
