@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
+import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
@@ -33,7 +35,7 @@ class ValueSelector extends StatelessWidget {
         Row(
           children: [
             _CircleIconButton(
-              icon: Icons.remove,
+              icon: AppIcons.systemSensetalIconMinus,
               onPressed: onDecrement,
             ),
             const HorizontalSpace(size: AppSpaceSize.sm),
@@ -55,7 +57,7 @@ class ValueSelector extends StatelessWidget {
             ),
             const HorizontalSpace(size: AppSpaceSize.sm),
             _CircleIconButton(
-              icon: Icons.add,
+              icon: AppIcons.systemSensetalIconPlus,
               onPressed: onIncrement,
             ),
           ],
@@ -66,7 +68,7 @@ class ValueSelector extends StatelessWidget {
 }
 
 class _CircleIconButton extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final VoidCallback onPressed;
 
   const _CircleIconButton({
@@ -77,8 +79,8 @@ class _CircleIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: getSizeFromEnum(AppSpaceSize.xl),
+      height: getSizeFromEnum(AppSpaceSize.xl),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.neutral05,
@@ -94,10 +96,13 @@ class _CircleIconButton extends StatelessWidget {
           child: InkWell(
             customBorder: const CircleBorder(),
             onTap: onPressed,
-            child: Icon(
-              icon,
-              size: 16,
-              color: AppColors.primary02,
+            child: Padding(
+              padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.xs)),
+              child: SvgPicture.asset(
+                icon,
+                color: AppColors.primary02,
+                semanticsLabel: 'Sensetal system icon',
+              ),
             ),
           ),
         ),
