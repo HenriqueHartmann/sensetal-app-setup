@@ -3,12 +3,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 
-const String valorImc = "20.37";
-const String classificacaoImc = "Normal";
-const String subTxtClassificacaoImc = "Entre 18.5 e 24.9";
-
 class ImcIndicatorWidget extends StatelessWidget {
-  const ImcIndicatorWidget({super.key});
+  final double imcValue;
+  final String imcCategory;
+  final String subTextImcCategory;
+  final String gender;
+
+  const ImcIndicatorWidget(
+      {super.key,
+      required this.imcValue,
+      required this.imcCategory,
+      required this.subTextImcCategory,
+      required this.gender});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,14 @@ class ImcIndicatorWidget extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: SvgPicture.asset('assets/images/corpo.svg'),
+              child: SizedBox(
+                height: 209,
+                child: SvgPicture.asset(
+                  gender == 'Masculino'
+                      ? 'assets/images/male_model_front.svg'
+                      : 'assets/images/female_model_front.svg',
+                ),
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -70,7 +83,7 @@ class ImcIndicatorWidget extends StatelessWidget {
                         horizontal: 16,
                       ),
                       child: Text(
-                        valorImc,
+                        imcValue.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .displayMedium
@@ -78,14 +91,14 @@ class ImcIndicatorWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      classificacaoImc,
+                      imcCategory,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(color: AppColors.neutral01),
                     ),
                     Text(
-                      subTxtClassificacaoImc,
+                      subTextImcCategory,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
