@@ -5,21 +5,15 @@ import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 
-// Contem as datas correspondentes aos 5 ultimos valores de dor para o grafico
-const List<String> datas = [
-  "01/01/2001",
-  "02/02/2002",
-  "03/03/2003",
-  "04/04/2004",
-  "05/05/2005",
-];
-
-const List<double> grauDor = [10, 5, 6, 0, 10];
-
-const String areaDor = 'Lombar';
-
-class GraficoIntensidadeDor extends StatelessWidget {
-  const GraficoIntensidadeDor({super.key});
+class LastFivePainMeasureWidget extends StatelessWidget {
+  final List<double> lastFivePainMeasure;
+  final String painAreaName;
+  final List<DateTime> lastFivePainMeasureDate;
+  const LastFivePainMeasureWidget(
+      {super.key,
+      required this.lastFivePainMeasure,
+      required this.painAreaName,
+      required this.lastFivePainMeasureDate});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +28,9 @@ class GraficoIntensidadeDor extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const AreaSuperior(),
+          TopArea(
+            painAreaName: this.painAreaName,
+          ),
           SizedBox(
             height: getSizeFromEnum(AppSpaceSize.md),
           ),
@@ -44,11 +40,15 @@ class GraficoIntensidadeDor extends StatelessWidget {
             height: 1,
           ),
           Container(
-              padding: EdgeInsets.only(
-                top: getSizeFromEnum(AppSpaceSize.md),
-              ),
-              width: double.infinity,
-              child: const AreaFundo()),
+            padding: EdgeInsets.only(
+              top: getSizeFromEnum(AppSpaceSize.md),
+            ),
+            width: double.infinity,
+            child: BackArea(
+              lastFivePainMeasure: this.lastFivePainMeasure,
+              lastFivePainMeasureDate: this.lastFivePainMeasureDate,
+            ),
+          ),
           //const AreaDatas()
         ],
       ),
@@ -56,8 +56,9 @@ class GraficoIntensidadeDor extends StatelessWidget {
   }
 }
 
-class AreaSuperior extends StatelessWidget {
-  const AreaSuperior({super.key});
+class TopArea extends StatelessWidget {
+  final String painAreaName;
+  const TopArea({super.key, required this.painAreaName});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class AreaSuperior extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Dor na $areaDor",
+            "Dor na $painAreaName",
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.primary01,
                 ),
@@ -100,8 +101,9 @@ class AreaSuperior extends StatelessWidget {
   }
 }
 
-class Grafico extends StatelessWidget {
-  const Grafico({super.key});
+class GraphArea extends StatelessWidget {
+  final List<double> lastFivePainMeasure;
+  const GraphArea({super.key, required this.lastFivePainMeasure});
 
   @override
   Widget build(BuildContext context) {
@@ -117,14 +119,14 @@ class Grafico extends StatelessWidget {
           lineBarsData: [
             LineChartBarData(
               spots: [
-                for (int i = 0; i < grauDor.length; i++)
-                  FlSpot(i.toDouble(), grauDor[i]),
+                for (int i = 0; i < lastFivePainMeasure.length; i++)
+                  FlSpot(i.toDouble(), lastFivePainMeasure[i]),
               ],
               color: AppColors.primary03,
               barWidth: 1,
               dotData: FlDotData(
                 getDotPainter: (spot, percent, barData, index) {
-                  final isLast = spot.x == grauDor.length - 1;
+                  final isLast = spot.x == lastFivePainMeasure.length - 1;
                   final isFirst = spot.x == 0;
                   return FlDotCirclePainter(
                     radius: isLast ? 3 : 2,
@@ -150,8 +152,13 @@ class Grafico extends StatelessWidget {
   }
 }
 
-class AreaFundo extends StatelessWidget {
-  const AreaFundo({super.key});
+class BackArea extends StatelessWidget {
+  final List<double> lastFivePainMeasure;
+  final List<DateTime> lastFivePainMeasureDate;
+  const BackArea(
+      {super.key,
+      required this.lastFivePainMeasure,
+      required this.lastFivePainMeasureDate});
 
   @override
   Widget build(BuildContext context) {
@@ -160,20 +167,25 @@ class AreaFundo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const FundoUltimoPontoGrafico(),
+            const GraphLastPointBackground(),
             // Distancia entre fundo do grafico e lateral direita
             SizedBox(width: getSizeFromEnum(AppSpaceSize.xs) + 1)
           ],
         ),
-        const ValoresPontosData(),
-        const Grafico(),
+        DatePainMeasureValues(
+          lastFivePainMeasure: this.lastFivePainMeasure,
+          lastFivePainMeasureDate: this.lastFivePainMeasureDate,
+        ),
+        GraphArea(
+          lastFivePainMeasure: this.lastFivePainMeasure,
+        ),
       ],
     );
   }
 }
 
-class FundoUltimoPontoGrafico extends StatelessWidget {
-  const FundoUltimoPontoGrafico({super.key});
+class GraphLastPointBackground extends StatelessWidget {
+  const GraphLastPointBackground({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -188,27 +200,35 @@ class FundoUltimoPontoGrafico extends StatelessWidget {
   }
 }
 
-class ValoresPontosData extends StatelessWidget {
-  const ValoresPontosData({super.key});
+class DatePainMeasureValues extends StatelessWidget {
+  final List<double> lastFivePainMeasure;
+  final List<DateTime> lastFivePainMeasureDate;
+  const DatePainMeasureValues(
+      {super.key,
+      required this.lastFivePainMeasure,
+      required this.lastFivePainMeasureDate});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: getSizeFromEnum(AppSpaceSize.xxs)),
+      padding: EdgeInsets.only(
+          top: getSizeFromEnum(AppSpaceSize.xxs),
+          left: getSizeFromEnum(AppSpaceSize.xxs) + 1,
+          right: getSizeFromEnum(AppSpaceSize.xxs) + 1),
       height: 103,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
-          grauDor.length,
+          lastFivePainMeasure.length,
           (index) {
-            final isLast = index == grauDor.length - 1;
+            final isLast = index == lastFivePainMeasure.length - 1;
             return SizedBox(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    (grauDor[index]).toInt().toString(),
+                    (lastFivePainMeasure[index]).toInt().toString(),
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: isLast ? Colors.white : AppColors.primary03,
@@ -238,10 +258,10 @@ class ValoresPontosData extends StatelessWidget {
                           height: 53,
                         ),
                   Text(
-                    datas[index],
+                    '${lastFivePainMeasureDate[index].day}/${lastFivePainMeasureDate[index].month}/${lastFivePainMeasureDate[index].year}',
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: index == datas.length - 1
+                          color: index == lastFivePainMeasureDate.length - 1
                               ? AppColors.primary02
                               : AppColors.primary03,
                           fontWeight: FontWeight.bold,

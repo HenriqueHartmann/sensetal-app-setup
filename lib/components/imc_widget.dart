@@ -7,8 +7,8 @@ const String valorImc = "20.37";
 const String classificacaoImc = "Normal";
 const String subTxtClassificacaoImc = "Entre 18.5 e 24.9";
 
-class ImcIndicador extends StatelessWidget {
-  const ImcIndicador({super.key});
+class ImcIndicatorWidget extends StatelessWidget {
+  const ImcIndicatorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/components/botao_deslizante_borda.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 
-class IMCSlider extends StatefulWidget {
-  const IMCSlider({super.key});
+class CustomSlider extends StatefulWidget {
+  const CustomSlider({super.key});
 
   @override
-  State<IMCSlider> createState() => _IMCSliderState();
+  State<CustomSlider> createState() => _CustomSliderState();
 }
 
-class _IMCSliderState extends State<IMCSlider> {
+class _CustomSliderState extends State<CustomSlider> {
   double _sliderValue = 5;
 
   @override

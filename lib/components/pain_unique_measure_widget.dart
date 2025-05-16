@@ -5,10 +5,16 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 
 // Contem os 5 ultimos valores de dor para o grafico
-const List<double> grauDor = [1, 2, 5, 10, 10];
+class PainUniqueMeasureWidget extends StatelessWidget {
+  final List<double> lastFivePainMeasure; // Ultimos 5 medicoes de dor
+  final String painScale; // Escala da dor texto
+  final DateTime lastPainMeasureDate; // Data da ultima medicao de dor
 
-class DorWidget extends StatelessWidget {
-  const DorWidget({super.key});
+  const PainUniqueMeasureWidget(
+      {super.key,
+      required this.lastFivePainMeasure,
+      required this.painScale,
+      required this.lastPainMeasureDate});
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +30,18 @@ class DorWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          const FundoUltimoPontoGrafico(),
+          GraphLastPointBackground(painLevel: lastFivePainMeasure.last),
           Padding(
             padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.xs)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Expanded(
+                Expanded(
                   flex: 1,
-                  child: AreaLateralEsquerda(),
+                  child: LeftSideArea(
+                    painScale: this.painScale,
+                    lastPainMeasureDate: this.lastPainMeasureDate,
+                  ),
                 ),
                 Expanded(
                   flex: 2,
@@ -43,7 +52,8 @@ class DorWidget extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(
                             right: getSizeFromEnum(AppSpaceSize.lg)),
-                        child: const AreaGrafico(),
+                        child:
+                            GraphArea(lastFivePainMeasure: lastFivePainMeasure),
                       ),
                     ),
                   ),
@@ -58,24 +68,27 @@ class DorWidget extends StatelessWidget {
 }
 
 // Gera o grafico do widget
-class AreaGrafico extends StatelessWidget {
-  const AreaGrafico({super.key});
+class GraphArea extends StatelessWidget {
+  final List<double> lastFivePainMeasure;
+  const GraphArea({super.key, required this.lastFivePainMeasure});
 
   @override
   Widget build(BuildContext context) {
     return LineChart(
       LineChartData(
+        maxY: 10,
+        minY: 0,
         lineBarsData: [
           LineChartBarData(
             spots: [
-              for (int i = 0; i < grauDor.length; i++)
-                FlSpot(i.toDouble(), grauDor[i]),
+              for (int i = 0; i < lastFivePainMeasure.length; i++)
+                FlSpot(i.toDouble(), lastFivePainMeasure[i]),
             ],
             color: AppColors.primary02,
             barWidth: 3,
             dotData: FlDotData(
               getDotPainter: (spot, percent, barData, index) {
-                final isLast = spot.x == grauDor.length - 1;
+                final isLast = spot.x == lastFivePainMeasure.length - 1;
                 return FlDotCirclePainter(
                   radius: 2,
                   color: isLast ? AppColors.secondary02 : AppColors.primary02,
@@ -97,8 +110,11 @@ class AreaGrafico extends StatelessWidget {
 }
 
 // Gera a area lateral esquerda do grafico
-class AreaLateralEsquerda extends StatelessWidget {
-  const AreaLateralEsquerda({super.key});
+class LeftSideArea extends StatelessWidget {
+  final String painScale;
+  final DateTime lastPainMeasureDate;
+  const LeftSideArea(
+      {super.key, required this.painScale, required this.lastPainMeasureDate});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +129,7 @@ class AreaLateralEsquerda extends StatelessWidget {
             vertical: 2,
             horizontal: getSizeFromEnum(AppSpaceSize.md),
           ),
-          child: Text('Aguda',
+          child: Text(painScale,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: AppColors.secondary02, fontWeight: FontWeight.bold)),
         ),
@@ -121,7 +137,7 @@ class AreaLateralEsquerda extends StatelessWidget {
           height: getSizeFromEnum(AppSpaceSize.xs),
         ),
         Text(
-          '28/03/2025',
+          "${lastPainMeasureDate.day}/${lastPainMeasureDate.month}/${lastPainMeasureDate.year}",
           style: Theme.of(context)
               .textTheme
               .bodyMedium
@@ -133,8 +149,9 @@ class AreaLateralEsquerda extends StatelessWidget {
 }
 
 // Gera o fundo azul atrás do último ponto do gráfico
-class FundoUltimoPontoGrafico extends StatelessWidget {
-  const FundoUltimoPontoGrafico({super.key});
+class GraphLastPointBackground extends StatelessWidget {
+  final double painLevel;
+  const GraphLastPointBackground({super.key, required this.painLevel});
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +166,11 @@ class FundoUltimoPontoGrafico extends StatelessWidget {
             color: AppColors.primary04,
             borderRadius: AppBorderRadius.sm,
           ),
-          child: (grauDor[4] > 5) ? const TextoNoAlto() : const TextoEmBaixo(),
+          // ignore: unnecessary_this
+          child: (this.painLevel > 5)
+              // ignore: unnecessary_this
+              ? TextAbove(lastPainMeasure: this.painLevel)
+              : TextBelow(lastPainMeasure: painLevel),
         ),
       ),
     );
@@ -157,8 +178,9 @@ class FundoUltimoPontoGrafico extends StatelessWidget {
 }
 
 // Se o valor for menor que 5, o texto fica acima do gráfico
-class TextoNoAlto extends StatelessWidget {
-  const TextoNoAlto({super.key});
+class TextAbove extends StatelessWidget {
+  final double lastPainMeasure;
+  const TextAbove({super.key, required this.lastPainMeasure});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -172,10 +194,9 @@ class TextoNoAlto extends StatelessWidget {
           decoration: const BoxDecoration(
               borderRadius: AppBorderRadius.sm, color: AppColors.secondary02),
           padding: EdgeInsets.symmetric(
-            vertical: 2,
             horizontal: getSizeFromEnum(AppSpaceSize.sm),
           ),
-          child: Text(grauDor[4].toInt().toString(),
+          child: Text(lastPainMeasure.toInt().toString(),
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: AppColors.primary02, fontWeight: FontWeight.bold)),
         ),
@@ -186,8 +207,9 @@ class TextoNoAlto extends StatelessWidget {
 }
 
 // Se o valor for maior que 5, o texto fica embaixo do gráfico
-class TextoEmBaixo extends StatelessWidget {
-  const TextoEmBaixo({super.key});
+class TextBelow extends StatelessWidget {
+  final double lastPainMeasure;
+  const TextBelow({super.key, required this.lastPainMeasure});
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -200,10 +222,9 @@ class TextoEmBaixo extends StatelessWidget {
         decoration: const BoxDecoration(
             borderRadius: AppBorderRadius.sm, color: AppColors.secondary02),
         padding: EdgeInsets.symmetric(
-          vertical: 2,
           horizontal: getSizeFromEnum(AppSpaceSize.sm),
         ),
-        child: Text(grauDor[4].toInt().toString(),
+        child: Text(lastPainMeasure.toInt().toString(),
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: AppColors.primary02, fontWeight: FontWeight.bold)),
       )
