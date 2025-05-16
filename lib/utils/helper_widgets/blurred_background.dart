@@ -83,10 +83,14 @@ class BottomRightBlurredBackgroundPainter extends CustomPainter {
 
 class BlurredBackground extends StatelessWidget {
   final bool showSensetalIconInBackground;
+  final bool showBlur;
   final Widget child;
 
   const BlurredBackground(
-      {this.showSensetalIconInBackground = false, required this.child, super.key});
+      {this.showSensetalIconInBackground = false,
+      required this.child,
+      this.showBlur = true,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,16 +99,18 @@ class BlurredBackground extends StatelessWidget {
 
     return Stack(
       children: [
-        Positioned.fill(
-          child: CustomPaint(
-            painter: TopLeftBlurredBackgroundPainter(),
+        if (showBlur)
+          Positioned.fill(
+            child: CustomPaint(
+              painter: TopLeftBlurredBackgroundPainter(),
+            ),
           ),
-        ),
-        Positioned.fill(
-          child: CustomPaint(
-            painter: BottomRightBlurredBackgroundPainter(),
+        if (showBlur)
+          Positioned.fill(
+            child: CustomPaint(
+              painter: BottomRightBlurredBackgroundPainter(),
+            ),
           ),
-        ),
         if (showSensetalIconInBackground)
           Positioned.fill(
             child: Center(
