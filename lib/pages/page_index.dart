@@ -5,6 +5,7 @@ import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
 import 'package:sensetal_presentation_design_app/pages/page_login.dart';
 import 'package:sensetal_presentation_design_app/pages/page_sign_up_bond.dart';
+import 'package:sensetal_presentation_design_app/pages/page_teste_widget.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
@@ -79,6 +80,18 @@ class _PageIndexState extends State<PageIndex> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const PageSignUpBond(),
+                    ),
+                  );
+                },
+              ),
+              const VerticalSpace(size: AppSpaceSize.md),
+              AppButton(
+                buttonText: 'Teste',
+                buttonType: AppButtonOptions.outline,
+                onPressCallback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PageTeste(),
                     ),
                   );
                 },
