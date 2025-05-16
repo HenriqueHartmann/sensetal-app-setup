@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:sensetal_presentation_design_app/pages/page_login.dart';
+import 'package:sensetal_presentation_design_app/pages/page_avaliacao_dor.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
@@ -64,8 +64,8 @@ class TopArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const PageLogin()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const PageAvaliacaoDor()));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
