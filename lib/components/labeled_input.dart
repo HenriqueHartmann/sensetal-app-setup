@@ -43,14 +43,14 @@ class _LabeledInputState extends State<LabeledInput> {
         const VerticalSpace(size: AppSpaceSize.xs),
         Container(
           padding:
-              EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)), // Frame padding
+              EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)),
           decoration: BoxDecoration(
-            color: AppColors.neutralWhite, // background
+            color: AppColors.neutralWhite,
             border: Border.all(
-              color: AppColors.primary04, // border
+              color: AppColors.primary04,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(8), // radius
+            borderRadius: BorderRadius.circular(8),
           ),
           child: TextField(
             controller: widget.controller,
