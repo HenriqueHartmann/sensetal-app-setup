@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/components/selectable_option_group.dart';
 import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
 import 'package:sensetal_presentation_design_app/components/step_indicator.dart';
+import 'package:sensetal_presentation_design_app/pages/page_index.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
+import 'package:sensetal_presentation_design_app/utils/spacing_utils.dart';
 
 class PageQuestionSelection extends StatefulWidget {
   const PageQuestionSelection({super.key});
@@ -16,6 +19,12 @@ class PageQuestionSelection extends StatefulWidget {
 class _PageQuestionSelectionState extends State<PageQuestionSelection> {
   @override
   Widget build(BuildContext context) {
+    final padding = MediaQuery.of(context).padding;
+    final screenHeight =
+        MediaQuery.of(context).size.height - padding.top - padding.bottom;
+
+    double verticalGap = computeVerticalGap(screenHeight, 0.3, 0.55);
+
     return SensetalScaffold(
       customVerticalPadding: getSizeFromEnum(AppSpaceSize.xl),
       child: Column(
@@ -74,31 +83,35 @@ class _PageQuestionSelectionState extends State<PageQuestionSelection> {
               // values é List<String>
             },
           ),
-          const VerticalSpace(size: AppSpaceSize.custom, custom: 200.0),
-/*           Row(
+          VerticalSpace(size: AppSpaceSize.custom, custom: verticalGap),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              AppButton(
-                buttonText: 'Voltar',
-                buttonType: AppButtonOptions.outline,
-                onPressCallback: () {
-                  Navigator.of(context).pop();
-                },
+              Flexible(
+                child: AppButton(
+                  buttonText: 'Voltar',
+                  buttonType: AppButtonOptions.outline,
+                  onPressCallback: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
-              const VerticalSpace(size: AppSpaceSize.md),
-              AppButton(
-                buttonText: 'Continuar',
-                buttonType: AppButtonOptions.solid,
-                onPressCallback: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PageSignUpBond(),
-                    ),
-                  );
-                },
+              const HorizontalSpace(size: AppSpaceSize.md),
+              Flexible(
+                child: AppButton(
+                  buttonText: 'Continuar',
+                  buttonType: AppButtonOptions.solid,
+                  onPressCallback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const PageIndex(),
+                      ),
+                    );
+                  },
+                ),
               )
             ],
-          ), */
+          ),
         ],
       ),
     );
