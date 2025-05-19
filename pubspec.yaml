@@ -45,4 +45,6 @@ flutter:
     - assets/icons/system/sensetal-icon-check-circle.svg
     - assets/icons/system/sensetal-icon-minus.svg
     - assets/icons/system/sensetal-icon-plus.svg
+    - assets/icons/system/sensetal-icon-radio-off.svg
+    - assets/icons/system/sensetal-icon-radio-on.svg
     - assets/icons/system/sensetal-icon-x-circle.svg
