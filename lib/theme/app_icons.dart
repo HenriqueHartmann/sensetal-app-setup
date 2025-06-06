@@ -16,4 +16,6 @@ class AppIcons {
       "assets/icons/system/sensetal-icon-x-circle.svg";
   static const String systemSensetalIconClockwiseArrows =
       "assets/icons/system/sensetal-icon-clockwise-arrows.svg";
+  static const String systemSensetalIconCaretRight =
+      "assets/icons/system/sensetal-icon-caret-right.svg";
 }
