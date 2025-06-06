@@ -33,7 +33,7 @@ flutter:
         - asset: assets/fonts/MYRIADPRO/MYRIADPRO-REGULAR.OTF
         - asset: assets/fonts/MYRIADPRO/MYRIADPRO-SEMIBOLD.OTF
           weight: 600
-        - asset: assets/fonts/MyriadPro/MyriadPro-Bold.OTF
+        - asset: assets/fonts/MYRIADPRO/MYRIADPRO-BOLD.OTF
           weight: 700
   assets:
     # Brand Icons
@@ -47,10 +47,11 @@ flutter:
     - assets/icons/system/sensetal-icon-check-circle.svg
     - assets/icons/system/sensetal-icon-x-circle.svg
     - assets/icons/system/sensetal-icon-clockwise-arrows.svg
+    - assets/icons/system/sensetal-icon-caret-right.svg
 
     # Images
     - assets/images/bg_treino_ajuda.png
-    - assets/images/female_model_front.svg 
-    - assets/images/female_model_back.svg 
-    - assets/images/male_model_front.svg 
-    - assets/images/male_model_back.svg 
+    - assets/images/body_models/female_model_back.svg
+    - assets/images/body_models/female_model_front.svg
+    - assets/images/body_models/male_model_back.svg
+    - assets/images/body_models/male_model_front.svg

@@ -42,3 +42,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+android/settings.gradle
+.vscode/settings.json
+pubspec.lock
+.metadata
+.gitignore
+.gitignore
+.metadata
+pubspec.yaml
+pubspec.lock
+android/settings.gradle
+android/settings.gradle
