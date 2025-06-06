@@ -9,7 +9,7 @@ class SensetalScaffold extends StatelessWidget {
   final bool showSensetalLogoInTop;
   final bool sensetalLogoIsMini;
   final bool showSensetalIconInBackground;
-  final bool showBlur;
+  final bool showBackgroundBlur;
   final double? customVerticalPadding;
 
   const SensetalScaffold({
@@ -19,54 +19,59 @@ class SensetalScaffold extends StatelessWidget {
     this.sensetalLogoIsMini = true,
     this.showSensetalIconInBackground = true,
     this.customVerticalPadding,
-    this.showBlur = true,
+    this.showBackgroundBlur = true,
   });
+
+  Widget _buildContent(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double screenWidth = constraints.maxWidth;
+
+        double logoWidth =
+            sensetalLogoIsMini ? screenWidth * 0.3 : screenWidth * 0.43;
+
+        double horizontalPadding = screenWidth < 360
+            ? getSizeFromEnum(AppSpaceSize.md)
+            : screenWidth < 600
+                ? getSizeFromEnum(AppSpaceSize.lg)
+                : getSizeFromEnum(AppSpaceSize.xxl);
+        double verticalPadding = customVerticalPadding != null
+            ? customVerticalPadding!
+            : horizontalPadding;
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: verticalPadding,
+            ),
+            child: Column(
+              children: [
+                if (showSensetalLogoInTop)
+                  SvgPicture.asset(
+                    AppIcons.brandSensetalLogo,
+                    width: logoWidth,
+                    semanticsLabel: 'Sensetal logo',
+                  ),
+                child,
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlurredBackground(
-          showBlur: this.showBlur,
-          showSensetalIconInBackground: showSensetalIconInBackground,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              double screenWidth = constraints.maxWidth;
-
-              double logoWidth =
-                  sensetalLogoIsMini ? screenWidth * 0.3 : screenWidth * 0.43;
-
-              double horizontalPadding = screenWidth < 360
-                  ? getSizeFromEnum(AppSpaceSize.md)
-                  : screenWidth < 600
-                      ? getSizeFromEnum(AppSpaceSize.lg)
-                      : getSizeFromEnum(AppSpaceSize.xxl);
-              double verticalPadding = customVerticalPadding != null
-                  ? customVerticalPadding!
-                  : horizontalPadding;
-
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: horizontalPadding,
-                    vertical: verticalPadding,
-                  ),
-                  child: Column(
-                    children: [
-                      if (showSensetalLogoInTop)
-                        SvgPicture.asset(
-                          AppIcons.brandSensetalLogo,
-                          width: logoWidth,
-                          semanticsLabel: 'Sensetal logo',
-                        ),
-                      child,
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+        child: showBackgroundBlur
+            ? BlurredBackground(
+                showSensetalIconInBackground: showSensetalIconInBackground,
+                child: _buildContent(context),
+              )
+            : _buildContent(context),
       ),
     );
   }
