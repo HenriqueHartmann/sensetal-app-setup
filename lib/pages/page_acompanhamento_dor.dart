@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
-import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
-import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
@@ -23,61 +21,46 @@ class PageAcompanhamentoDor extends StatefulWidget {
 class _PageAcompanhamentoDorState extends State<PageAcompanhamentoDor> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlurredBackground(
-          child: Stack(
-            children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  double screenWidth = constraints.maxWidth;
-                  double screenHeight = constraints.maxHeight;
+    return SensetalScaffold(
+      showBackgroundBlur: false,
+      child: Stack(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) {
+              double screenWidth = constraints.maxWidth;
+              double screenHeight = constraints.maxHeight;
 
-                  double logoWidth = screenWidth / 3;
-                  double verticalGap = screenHeight > 800
-                      ? 150.0
-                      : screenHeight > 600
-                          ? screenHeight * 0.2
-                          : screenHeight * 0.14;
-                  double horizontalPadding = screenWidth < 500
-                      ? getSizeFromEnum(AppSpaceSize.md)
-                      : screenWidth < 800
-                          ? getSizeFromEnum(AppSpaceSize.xl)
-                          : getSizeFromEnum(AppSpaceSize.custom, 64.0);
+              double logoWidth = screenWidth / 3;
+              double verticalGap = screenHeight > 800
+                  ? 150.0
+                  : screenHeight > 600
+                      ? screenHeight * 0.2
+                      : screenHeight * 0.14;
+              double horizontalPadding = screenWidth < 500
+                  ? getSizeFromEnum(AppSpaceSize.md)
+                  : screenWidth < 800
+                      ? getSizeFromEnum(AppSpaceSize.xl)
+                      : getSizeFromEnum(AppSpaceSize.custom, 64.0);
 
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPadding,
-                        vertical: getSizeFromEnum(AppSpaceSize.custom, 64.0),
-                      ),
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.brandSensetalLogo,
-                            width: logoWidth,
-                            semanticsLabel: 'Sensetal logo',
-                          ),
-                          VerticalSpace(size: AppSpaceSize.lg),
-                          Text("Acompanhamento de dores",
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium!
-                                  .copyWith(
-                                      color: AppColors.neutral01,
-                                      fontWeight: FontWeight.w700)),
-                          VerticalSpace(size: AppSpaceSize.lg),
-                          const SelecaoRegiao(),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text("Acompanhamento de dores",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(
+                                color: AppColors.neutral01,
+                                fontWeight: FontWeight.w700)),
+                    const VerticalSpace(size: AppSpaceSize.lg),
+                    const SelecaoRegiao(),
+                  ],
+                ),
+              );
+            },
           ),
-        ),
+        ],
       ),
     );
   }
@@ -112,39 +95,27 @@ class _SelecaoRegiaoState extends State<SelecaoRegiao> {
                       _botaoSelecionado = regioes[index];
                     });
                   },
-                  child: isSelected
-                      ? Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary02,
-                            borderRadius: AppBorderRadius.sm,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary02
+                          : AppColors.primary04,
+                      borderRadius: AppBorderRadius.sm,
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getSizeFromEnum(AppSpaceSize.md),
+                      vertical: getSizeFromEnum(AppSpaceSize.xs),
+                    ),
+                    height: 40,
+                    child: Text(
+                      regioes[index],
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: isSelected
+                                ? AppColors.secondary02
+                                : AppColors.primary02,
                           ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getSizeFromEnum(AppSpaceSize.md),
-                            vertical: getSizeFromEnum(AppSpaceSize.xs),
-                          ),
-                          height: 40,
-                          child: Text(regioes[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: AppColors.secondary02)),
-                        )
-                      : Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary04,
-                            borderRadius: AppBorderRadius.sm,
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getSizeFromEnum(AppSpaceSize.md),
-                            vertical: getSizeFromEnum(AppSpaceSize.xs),
-                          ),
-                          height: 40,
-                          child: Text(regioes[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: AppColors.primary02)),
-                        ),
+                    ),
+                  ),
                 ),
                 isLast
                     ? const SizedBox()
