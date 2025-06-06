@@ -6,7 +6,6 @@ import 'package:sensetal_presentation_design_app/pages/page_acompanhamento_dor.d
 import 'package:sensetal_presentation_design_app/pages/page_teste_widget.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
-import 'package:sensetal_presentation_design_app/utils/spacing_utils.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 
 const gender = 'Masculino';
@@ -21,14 +20,8 @@ class PageAvaliacaoDor extends StatefulWidget {
 class PageAvaliacaoDorState extends State<PageAvaliacaoDor> {
   @override
   Widget build(BuildContext context) {
-    final padding = MediaQuery.of(context).padding;
-    final screenHeight =
-        MediaQuery.of(context).size.height - padding.top - padding.bottom;
-
-    double verticalGap = computeVerticalGap(screenHeight, 0.15, 0.2);
-
     return SensetalScaffold(
-      showBlur: false,
+      showBackgroundBlur: false,
       showSensetalIconInBackground: false,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -51,7 +44,7 @@ class PageAvaliacaoDorState extends State<PageAvaliacaoDor> {
                 .copyWith(color: AppColors.neutral03),
           ),
           const VerticalSpace(size: AppSpaceSize.sm),
-          OnBodyPainSelectionWidget(
+          const OnBodyPainSelectionWidget(
             gender: gender,
           ),
           const VerticalSpace(size: AppSpaceSize.sm),
