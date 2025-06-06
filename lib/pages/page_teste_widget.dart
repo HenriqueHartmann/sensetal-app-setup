@@ -5,6 +5,7 @@ import 'package:sensetal_presentation_design_app/components/last_five_pain_measu
 import 'package:sensetal_presentation_design_app/components/imc_widget.dart';
 import 'package:sensetal_presentation_design_app/components/exercise_streak_widget.dart';
 import 'package:sensetal_presentation_design_app/components/custom_slider.dart';
+import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_background.dart';
@@ -39,6 +40,8 @@ class PageTeste extends StatefulWidget {
 }
 
 class _PageTesteState extends State<PageTeste> {
+  double _value = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,28 +96,36 @@ class _PageTesteState extends State<PageTeste> {
                                   imcCategory: classificacaoImc,
                                   subTextImcCategory: subTxtClassificacaoImc,
                                   gender: gender),
-                              SizedBox(
-                                height: 16,
+                              VerticalSpace(size: AppSpaceSize.md),
+                              CustomSlider(
+                                value: _value,
+                                onChanged: (v) => setState(() => _value = v),
+                                min: 0,
+                                max: 10,
+                                trackGradient: AppColors.gradientMain,
+                                thumbGradient: AppColors.gradientMain,
+                                thumbBorderColor:
+                                    const Color.fromARGB(255, 92, 92, 92),
+                                thumbBorderWidth: 4,
+                                thumbRadius: 12,
+                                trackHeight: 8,
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(),
                               ),
-                              CustomSlider(),
-                              SizedBox(
-                                height: 16,
-                              ),
+                              VerticalSpace(size: AppSpaceSize.md),
                               PainUniqueMeasureWidget(
                                 lastFivePainMeasure: lastFivePainMeasure,
                                 painScale: painScale,
                                 lastPainMeasureDate: DateTime.now(),
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
+                              VerticalSpace(size: AppSpaceSize.md),
                               LastFivePainMeasureWidget(
                                   painAreaName: painAreaName,
                                   lastFivePainMeasure: lastFivePainMeasure,
                                   lastFivePainMeasureDate: lastFiveMeasureDays),
-                              SizedBox(
-                                height: 16,
-                              ),
+                              VerticalSpace(size: AppSpaceSize.md),
                               ExerciseStreakWidget(
                                 lastThreeDaysExecution: lastThreeDaysExecution,
                               )

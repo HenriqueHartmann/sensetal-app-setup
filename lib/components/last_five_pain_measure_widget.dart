@@ -1,9 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sensetal_presentation_design_app/pages/page_avaliacao_dor.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
+import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
+import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 class LastFivePainMeasureWidget extends StatelessWidget {
   final List<double> lastFivePainMeasure;
@@ -24,7 +27,7 @@ class LastFivePainMeasureWidget extends StatelessWidget {
       ),
       height: 190,
       padding: EdgeInsets.all(
-        getSizeFromEnum(AppSpaceSize.md) - 3,
+        getSizeFromEnum(AppSpaceSize.custom, 13.0),
       ),
       child: Column(
         children: [
@@ -85,13 +88,10 @@ class TopArea extends StatelessWidget {
                       color: AppColors.primary02,
                     ),
               ),
-              SizedBox(
-                width: getSizeFromEnum(AppSpaceSize.xs),
-              ),
-              const Icon(
-                Icons.keyboard_arrow_right_rounded,
-                color: AppColors.neutral04,
-                size: 18,
+              const HorizontalSpace(size: AppSpaceSize.xs),
+              SvgPicture.asset(
+                AppIcons.systemSensetalIconCaretRight,
+                width: 16,
               ),
             ],
           ),
@@ -109,9 +109,9 @@ class GraphArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        top: getSizeFromEnum(AppSpaceSize.xxl) + 12,
-        right: getSizeFromEnum(AppSpaceSize.lg) + 1,
-        left: getSizeFromEnum(AppSpaceSize.lg) + 1,
+        top: getSizeFromEnum(AppSpaceSize.custom, 52.0),
+        right: getSizeFromEnum(AppSpaceSize.custom, 25.0),
+        left: getSizeFromEnum(AppSpaceSize.custom, 25.0),
       ),
       height: 67,
       child: LineChart(
@@ -164,12 +164,12 @@ class BackArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const GraphLastPointBackground(),
+            GraphLastPointBackground(),
             // Distancia entre fundo do grafico e lateral direita
-            SizedBox(width: getSizeFromEnum(AppSpaceSize.xs) + 1)
+            HorizontalSpace(size: AppSpaceSize.custom, custom: 9.0)
           ],
         ),
         DatePainMeasureValues(
@@ -213,8 +213,8 @@ class DatePainMeasureValues extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
           top: getSizeFromEnum(AppSpaceSize.xxs),
-          left: getSizeFromEnum(AppSpaceSize.xxs) + 1,
-          right: getSizeFromEnum(AppSpaceSize.xxs) + 1),
+          left: getSizeFromEnum(AppSpaceSize.custom, 5.0),
+          right: getSizeFromEnum(AppSpaceSize.custom, 5.0)),
       height: 103,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -251,12 +251,12 @@ class DatePainMeasureValues extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
-                            const SizedBox(height: 35),
+                            const VerticalSpace(
+                                size: AppSpaceSize.custom, custom: 35.0),
                           ],
                         )
-                      : const SizedBox(
-                          height: 53,
-                        ),
+                      : const VerticalSpace(
+                          size: AppSpaceSize.custom, custom: 53.0),
                   Text(
                     '${lastFivePainMeasureDate[index].day}/${lastFivePainMeasureDate[index].month}/${lastFivePainMeasureDate[index].year}',
                     textAlign: TextAlign.right,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
+import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
+import 'package:sensetal_presentation_design_app/utils/day_weekday_map_utils.dart';
 
 class ExerciseStreakWidget extends StatelessWidget {
   final List<double> lastThreeDaysExecution;
@@ -7,7 +9,7 @@ class ExerciseStreakWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final weekDays = defineWeekDays();
+    final weekDays = defineWeekDays(3);
 
     return Stack(
       children: [
@@ -19,7 +21,7 @@ class ExerciseStreakWidget extends StatelessWidget {
             ),
             height: 58,
             width: 32,
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.xs)),
           ),
         ),
         Row(
@@ -38,7 +40,7 @@ class ExerciseStreakWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    dayInfo['day'] ?? '',
+                    dayInfo.day.toString(),
                     // verifica se o dia é o central e muda a cor do texto
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: isCentral
@@ -57,7 +59,7 @@ class ExerciseStreakWidget extends StatelessWidget {
                     size: 4,
                   ),
                   Text(
-                    dayInfo['weekDay'] ?? '',
+                    dayInfo.dayWeek.toString(),
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: isCentral
                             ? AppColors.error05
@@ -71,29 +73,4 @@ class ExerciseStreakWidget extends StatelessWidget {
       ],
     );
   }
-}
-
-// Função que retorna os dias da semana em relação ao dia atual
-List<Map<String, String>> defineWeekDays() {
-  final todayDate = DateTime.now();
-  final List<String> daysOfWeek = [
-    'Dom',
-    'Seg',
-    'Ter',
-    'Qua',
-    'Qui',
-    'Sex',
-    'Sáb'
-  ];
-
-  return List.generate(7, (i) {
-    final day = todayDate.add(Duration(days: i - 3)).day.toString();
-    final dayWeek = daysOfWeek[
-        todayDate.add(Duration(days: i - 3)).weekday % 7]; // 1=Seg, 7=Dom
-
-    return {
-      'day': day,
-      'weekDay': dayWeek,
-    };
-  });
 }

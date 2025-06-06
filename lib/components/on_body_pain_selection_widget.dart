@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
+import 'package:sensetal_presentation_design_app/theme/app_images.dart';
+import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
+import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 class OnBodyPainSelectionWidget extends StatefulWidget {
   final String gender;
@@ -28,14 +31,14 @@ class _OnBodyPainSelectionWidgetState extends State<OnBodyPainSelectionWidget> {
                   height: 400,
                   child: SvgPicture.asset(
                     (widget.gender == 'Masculino')
-                        ? 'assets/images/male_model_front.svg'
-                        : 'assets/images/female_model_front.svg',
+                        ? AppImages.maleModelFront
+                        : AppImages.femaleModelFront,
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: () {},
-                child: Container(
+                child: SizedBox(
                   height: 40,
                   width: 80,
                   child: Row(
@@ -44,8 +47,8 @@ class _OnBodyPainSelectionWidgetState extends State<OnBodyPainSelectionWidget> {
                         AppIcons.systemSensetalIconClockwiseArrows,
                         width: 40,
                       ),
-                      SizedBox(width: 8),
-                      Text('Virar')
+                      const HorizontalSpace(size: AppSpaceSize.xs),
+                      const Text('Virar')
                     ],
                   ),
                 ),

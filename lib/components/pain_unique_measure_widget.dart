@@ -3,6 +3,7 @@ import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
+import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 // Contem os 5 ultimos valores de dor para o grafico
 class PainUniqueMeasureWidget extends StatelessWidget {
@@ -126,16 +127,14 @@ class LeftSideArea extends StatelessWidget {
           decoration: const BoxDecoration(
               borderRadius: AppBorderRadius.pill, color: AppColors.primary02),
           padding: EdgeInsets.symmetric(
-            vertical: 2,
+            vertical: getSizeFromEnum(AppSpaceSize.custom, 2),
             horizontal: getSizeFromEnum(AppSpaceSize.md),
           ),
           child: Text(painScale,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: AppColors.secondary02, fontWeight: FontWeight.bold)),
         ),
-        SizedBox(
-          height: getSizeFromEnum(AppSpaceSize.xs),
-        ),
+        const VerticalSpace(size: AppSpaceSize.xs),
         Text(
           "${lastPainMeasureDate.day}/${lastPainMeasureDate.month}/${lastPainMeasureDate.year}",
           style: Theme.of(context)
