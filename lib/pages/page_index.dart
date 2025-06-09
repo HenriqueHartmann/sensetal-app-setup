@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
