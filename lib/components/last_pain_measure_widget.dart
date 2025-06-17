@@ -5,17 +5,22 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
-// Contem os 5 ultimos valores de dor para o grafico
-class PainUniqueMeasureWidget extends StatelessWidget {
+class LastPainMeasureData {
   final List<double> lastFivePainMeasure; // Ultimos 5 medicoes de dor
   final String painScale; // Escala da dor texto
   final DateTime lastPainMeasureDate; // Data da ultima medicao de dor
 
-  const PainUniqueMeasureWidget(
-      {super.key,
-      required this.lastFivePainMeasure,
+  const LastPainMeasureData(
+      {required this.lastFivePainMeasure,
       required this.painScale,
       required this.lastPainMeasureDate});
+}
+
+// Contem os 5 ultimos valores de dor para o grafico
+class LastPainMeasureWidget extends StatelessWidget {
+  final LastPainMeasureData data;
+
+  const LastPainMeasureWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,7 @@ class PainUniqueMeasureWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          GraphLastPointBackground(painLevel: lastFivePainMeasure.last),
+          GraphLastPointBackground(painLevel: data.lastFivePainMeasure.last),
           Padding(
             padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.xs)),
             child: Row(
@@ -40,8 +45,8 @@ class PainUniqueMeasureWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: LeftSideArea(
-                    painScale: this.painScale,
-                    lastPainMeasureDate: this.lastPainMeasureDate,
+                    painScale: data.painScale,
+                    lastPainMeasureDate: data.lastPainMeasureDate,
                   ),
                 ),
                 Expanded(
@@ -53,8 +58,8 @@ class PainUniqueMeasureWidget extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(
                             right: getSizeFromEnum(AppSpaceSize.lg)),
-                        child:
-                            GraphArea(lastFivePainMeasure: lastFivePainMeasure),
+                        child: GraphArea(
+                            lastFivePainMeasure: data.lastFivePainMeasure),
                       ),
                     ),
                   ),
