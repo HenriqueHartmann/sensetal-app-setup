@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sensetal_presentation_design_app/components/pain_unique_measure_widget.dart';
+import 'package:sensetal_presentation_design_app/components/last_pain_measure_widget.dart';
 import 'package:sensetal_presentation_design_app/components/last_five_pain_measure_widget.dart';
 import 'package:sensetal_presentation_design_app/components/imc_widget.dart';
 import 'package:sensetal_presentation_design_app/components/exercise_streak_widget.dart';
@@ -12,7 +12,7 @@ import 'package:sensetal_presentation_design_app/utils/helper_widgets/blurred_ba
 import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widgets.dart';
 
 const List<double> lastFivePainMeasure = [1.0, 4.0, 2.0, .0, 5.0];
-
+DateTime lastPainMeasureDate = DateTime.now();
 const List<double> lastThreeDaysExecution = [1, 1, 0];
 
 List<DateTime> lastFiveMeasureDays = [
@@ -40,8 +40,6 @@ class PageTeste extends StatefulWidget {
 }
 
 class _PageTesteState extends State<PageTeste> {
-  double _value = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,21 +89,18 @@ class _PageTesteState extends State<PageTeste> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ImcIndicatorWidget(
+                              const ImcIndicatorWidget(
                                   imcValue: valorImc,
                                   imcCategory: classificacaoImc,
                                   subTextImcCategory: subTxtClassificacaoImc,
                                   gender: gender),
-                              VerticalSpace(size: AppSpaceSize.md),
+                              const VerticalSpace(size: AppSpaceSize.md),
                               CustomSlider(
-                                value: _value,
-                                onChanged: (v) => setState(() => _value = v),
                                 min: 0,
                                 max: 10,
-                                trackGradient: AppColors.gradientMain,
+                                activeTrackGradient: AppColors.gradientMain,
                                 thumbGradient: AppColors.gradientMain,
-                                thumbBorderColor:
-                                    const Color.fromARGB(255, 92, 92, 92),
+                                thumbBorderColor: const Color(0xFF5C5C5C),
                                 thumbBorderWidth: 4,
                                 thumbRadius: 12,
                                 trackHeight: 8,
@@ -114,19 +109,20 @@ class _PageTesteState extends State<PageTeste> {
                                     .bodyLarge
                                     ?.copyWith(),
                               ),
-                              VerticalSpace(size: AppSpaceSize.md),
-                              PainUniqueMeasureWidget(
-                                lastFivePainMeasure: lastFivePainMeasure,
-                                painScale: painScale,
-                                lastPainMeasureDate: DateTime.now(),
-                              ),
-                              VerticalSpace(size: AppSpaceSize.md),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              LastPainMeasureWidget(
+                                  data: LastPainMeasureData(
+                                      lastFivePainMeasure: lastFivePainMeasure,
+                                      painScale: painScale,
+                                      lastPainMeasureDate:
+                                          lastPainMeasureDate)),
+                              const VerticalSpace(size: AppSpaceSize.md),
                               LastFivePainMeasureWidget(
                                   painAreaName: painAreaName,
                                   lastFivePainMeasure: lastFivePainMeasure,
                                   lastFivePainMeasureDate: lastFiveMeasureDays),
-                              VerticalSpace(size: AppSpaceSize.md),
-                              ExerciseStreakWidget(
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              const ExerciseStreakWidget(
                                 lastThreeDaysExecution: lastThreeDaysExecution,
                               )
                             ],
