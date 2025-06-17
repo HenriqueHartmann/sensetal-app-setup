@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sensetal_presentation_design_app/components/app_button.dart';
 import 'package:sensetal_presentation_design_app/components/on_body_pain_selection_widget.dart';
 import 'package:sensetal_presentation_design_app/components/sensetal_scaffold.dart';
+import 'package:sensetal_presentation_design_app/components/last_pain_measure_widget.dart';
 import 'package:sensetal_presentation_design_app/pages/page_acompanhamento_dor.dart';
 import 'package:sensetal_presentation_design_app/pages/page_teste_widget.dart';
 import 'package:sensetal_presentation_design_app/theme/app_space_size.dart';
@@ -9,6 +10,25 @@ import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widg
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 
 const gender = 'Masculino';
+
+final List<LastPainMeasureData> uniqueMeasureData = [
+  LastPainMeasureData(
+      lastFivePainMeasure: [3, 4, 5, 6, 7],
+      lastPainMeasureDate: DateTime.now(),
+      painScale: 'aguda'),
+  LastPainMeasureData(
+      lastFivePainMeasure: [2, 3, 4, 5, 6],
+      lastPainMeasureDate: DateTime.now().subtract(const Duration(days: 1)),
+      painScale: 'crônica'),
+  LastPainMeasureData(
+      lastFivePainMeasure: [1, 2, 3, 4, 5],
+      lastPainMeasureDate: DateTime.now().subtract(const Duration(days: 2)),
+      painScale: 'moderada'),
+  LastPainMeasureData(
+      lastFivePainMeasure: [0, 1, 2, 3, 4],
+      lastPainMeasureDate: DateTime.now().subtract(const Duration(days: 3)),
+      painScale: 'leve'),
+];
 
 class PageAvaliacaoDor extends StatefulWidget {
   const PageAvaliacaoDor({Key? key}) : super(key: key);
@@ -44,8 +64,9 @@ class PageAvaliacaoDorState extends State<PageAvaliacaoDor> {
                 .copyWith(color: AppColors.neutral03),
           ),
           const VerticalSpace(size: AppSpaceSize.sm),
-          const OnBodyPainSelectionWidget(
+          OnBodyPainSelectionWidget(
             gender: gender,
+            painData: uniqueMeasureData,
           ),
           const VerticalSpace(size: AppSpaceSize.sm),
           AppButton(
@@ -70,7 +91,7 @@ class PageAvaliacaoDorState extends State<PageAvaliacaoDor> {
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );
