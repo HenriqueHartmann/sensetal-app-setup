@@ -18,4 +18,12 @@ class AppIcons {
       "assets/icons/system/sensetal-icon-clockwise-arrows.svg";
   static const String systemSensetalIconCaretRight =
       "assets/icons/system/sensetal-icon-caret-right.svg";
+  static const String systemSensetalIconSensetal =
+      "assets/icons/system/sensetal-icon-sensetal.svg";
+  static const String systemSensetalIconSmileySad =
+      "assets/icons/system/sensetal-icon-smiley-sad.svg";
+  static const String systemSensetalIconArrowDown =
+      "assets/icons/system/sensetal-icon-arrow-down.svg";
+  static const String systemSensetalIconSmileyMeh =
+      "assets/icons/system/sensetal-icon-smiley-meh.svg";
 }
