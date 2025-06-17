@@ -49,6 +49,10 @@ flutter:
     - assets/icons/system/sensetal-icon-x-circle.svg
     - assets/icons/system/sensetal-icon-clockwise-arrows.svg
     - assets/icons/system/sensetal-icon-caret-right.svg
+    - assets/icons/system/sensetal-icon-sensetal.svg
+    - assets/icons/system/sensetal-icon-smiley-sad.svg
+    - assets/icons/system/sensetal-icon-arrow-down.svg
+    - assets/icons/system/sensetal-icon-smiley-meh.svg
 
     # Images
     - assets/images/bg_treino_ajuda.png
