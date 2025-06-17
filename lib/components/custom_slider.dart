@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatefulWidget {
-  final double value;
   final double min;
   final double max;
-  final ValueChanged<double> onChanged;
   final TextStyle? textStyle;
 
   /// Cor ou degradê da barra
-  final Color trackColor;
-  final LinearGradient? trackGradient;
+  final Color activeTrackColor;
+  final LinearGradient? activeTrackGradient;
+
+  /// Cor ou degradê da barra
+  final Color inactiveTrackColor;
+  final LinearGradient? inactiveTrackGradient;
 
   /// Thumb
   final Color thumbColor;
@@ -21,12 +23,12 @@ class CustomSlider extends StatefulWidget {
 
   const CustomSlider({
     super.key,
-    required this.value,
-    required this.onChanged,
     required this.min,
     required this.max,
-    this.trackColor = Colors.grey,
-    this.trackGradient,
+    this.activeTrackColor = Colors.grey,
+    this.activeTrackGradient,
+    this.inactiveTrackColor = Colors.grey,
+    this.inactiveTrackGradient,
     this.thumbColor = Colors.white,
     this.thumbGradient,
     this.thumbBorderColor,
@@ -41,14 +43,24 @@ class CustomSlider extends StatefulWidget {
 }
 
 class _CustomSliderState extends State<CustomSlider> {
+  late double value;
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.max / 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         trackHeight: widget.trackHeight,
         trackShape: _CustomSliderTrackShape(
-          trackColor: widget.trackColor,
-          gradient: widget.trackGradient,
+          activeTrackColor: widget.activeTrackColor,
+          activeTrackGradient: widget.activeTrackGradient,
+          inactiveTrackColor: widget.inactiveTrackColor,
+          inactiveTrackGradient: widget.inactiveTrackGradient,
           trackHeight: widget.trackHeight,
         ),
         thumbShape: _CustomSliderThumbShape(
@@ -68,8 +80,8 @@ class _CustomSliderState extends State<CustomSlider> {
         overlayShape: SliderComponentShape.noOverlay,
       ),
       child: Slider(
-        value: widget.value,
-        onChanged: widget.onChanged,
+        value: value,
+        onChanged: (v) => setState(() => value = v),
         min: widget.min,
         max: widget.max,
         divisions: (widget.max - widget.min).toInt(),
@@ -80,13 +92,17 @@ class _CustomSliderState extends State<CustomSlider> {
 
 // ===== Barra personalizada =====
 class _CustomSliderTrackShape extends SliderTrackShape {
-  final Color trackColor;
-  final LinearGradient? gradient;
+  final Color activeTrackColor;
+  final LinearGradient? activeTrackGradient;
+  final Color inactiveTrackColor;
+  final LinearGradient? inactiveTrackGradient;
   final double trackHeight;
 
   _CustomSliderTrackShape({
-    required this.trackColor,
-    this.gradient,
+    required this.activeTrackColor,
+    this.activeTrackGradient,
+    required this.inactiveTrackColor,
+    this.inactiveTrackGradient,
     this.trackHeight = 4.0,
   });
 
@@ -126,13 +142,46 @@ class _CustomSliderTrackShape extends SliderTrackShape {
       sliderTheme: sliderTheme,
     );
 
-    final Paint paint = Paint()
-      ..color = trackColor
-      ..shader = gradient?.createShader(trackRect);
+    // Calcula o ponto central do thumb na horizontal
+    final double thumbPos =
+        thumbCenter.dx.clamp(trackRect.left, trackRect.right);
+
+    // Active track: da esquerda até o centro do thumb
+    final Rect activeTrackRect = Rect.fromLTRB(
+      trackRect.left,
+      trackRect.top,
+      thumbPos,
+      trackRect.bottom,
+    );
+
+    // Inactive track: do centro do thumb até a direita
+    final Rect inactiveTrackRect = Rect.fromLTRB(
+      thumbPos,
+      trackRect.top,
+      trackRect.right,
+      trackRect.bottom,
+    );
+
+    // Desenha faixa ativa
+    final Paint activePaint = Paint()
+      ..color = activeTrackColor
+      ..shader = activeTrackGradient?.createShader(activeTrackRect);
 
     context.canvas.drawRRect(
-      RRect.fromRectAndRadius(trackRect, Radius.circular(trackHeight / 2)),
-      paint,
+      RRect.fromRectAndRadius(
+          activeTrackRect, Radius.circular(trackHeight / 2)),
+      activePaint,
+    );
+
+    // Desenha faixa inativa
+    final Paint inactivePaint = Paint()
+      ..color = inactiveTrackColor
+      ..shader = inactiveTrackGradient?.createShader(inactiveTrackRect);
+
+    context.canvas.drawRRect(
+      RRect.fromRectAndRadius(
+          inactiveTrackRect, Radius.circular(trackHeight / 2)),
+      inactivePaint,
     );
   }
 }
