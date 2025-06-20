@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatefulWidget {
+  final ValueChanged<double>? onChanged;
   final double min;
   final double max;
   final TextStyle? textStyle;
@@ -23,6 +24,7 @@ class CustomSlider extends StatefulWidget {
 
   const CustomSlider({
     super.key,
+    required this.onChanged,
     required this.min,
     required this.max,
     this.activeTrackColor = Colors.grey,
@@ -48,7 +50,7 @@ class _CustomSliderState extends State<CustomSlider> {
   @override
   void initState() {
     super.initState();
-    value = widget.max / 2;
+    value = 0;
   }
 
   @override
@@ -81,7 +83,12 @@ class _CustomSliderState extends State<CustomSlider> {
       ),
       child: Slider(
         value: value,
-        onChanged: (v) => setState(() => value = v),
+        onChanged: (v) {
+          setState(() => value = v);
+          if (widget.onChanged != null) {
+            widget.onChanged!(v); // Notifica o pai
+          }
+        },
         min: widget.min,
         max: widget.max,
         divisions: (widget.max - widget.min).toInt(),
