@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sensetal_presentation_design_app/components/icon_text_widget.dart';
 import 'package:sensetal_presentation_design_app/components/last_pain_measure_widget.dart';
 import 'package:sensetal_presentation_design_app/components/last_five_pain_measure_widget.dart';
 import 'package:sensetal_presentation_design_app/components/imc_widget.dart';
@@ -96,6 +97,10 @@ class _PageTesteState extends State<PageTeste> {
                                   gender: gender),
                               const VerticalSpace(size: AppSpaceSize.md),
                               CustomSlider(
+                                onChanged: (valor) {
+                                  // Aqui você recebe o valor do slider!
+                                  print('Valor selecionado: $valor');
+                                },
                                 min: 0,
                                 max: 10,
                                 activeTrackGradient: AppColors.gradientMain,
@@ -124,7 +129,26 @@ class _PageTesteState extends State<PageTeste> {
                               const VerticalSpace(size: AppSpaceSize.md),
                               const ExerciseStreakWidget(
                                 lastThreeDaysExecution: lastThreeDaysExecution,
-                              )
+                              ),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              IconTextWidget(
+                                  iconPath:
+                                      AppIcons.systemSensetalIconSmileyMeh,
+                                  text: 'Como você está se sentindo hoje?',
+                                  iconPosition: 'up'),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              IconTextWidget(
+                                  iconPath:
+                                      AppIcons.systemSensetalIconSmileyMeh,
+                                  text: 'Como você está se sentindo hoje?',
+                                  textOnUpPosition: 'Hoje',
+                                  iconPosition: 'up'),
+                              const VerticalSpace(size: AppSpaceSize.md),
+                              IconTextWidget(
+                                  iconPath:
+                                      AppIcons.systemSensetalIconSmileyMeh,
+                                  text: 'Como você está se sentindo hoje?',
+                                  iconPosition: 'left'),
                             ],
                           ),
                         ],
