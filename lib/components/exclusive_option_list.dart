@@ -16,7 +16,9 @@ class ExclusiveOptionItem {
 
 class ExclusiveOptionsList extends StatefulWidget {
   final List<ExclusiveOptionItem> itensList;
-  const ExclusiveOptionsList({super.key, required this.itensList});
+  final ValueChanged<String>? onTap;
+
+  const ExclusiveOptionsList({super.key, required this.itensList, this.onTap});
 
   @override
   State<ExclusiveOptionsList> createState() => _ExclusiveOptionsListState();
@@ -33,9 +35,14 @@ class _ExclusiveOptionsListState extends State<ExclusiveOptionsList> {
         (index) => Column(
           children: [
             GestureDetector(
-              onTap: () => setState(() {
-                _itemSelected = index;
-              }),
+              onTap: () {
+                setState(() {
+                  _itemSelected = index;
+                });
+                if (widget.onTap != null) {
+                  widget.onTap!(widget.itensList[index].title);
+                }
+              },
               child: ItemCard(
                 title: widget.itensList[index].title,
                 subtitle: widget.itensList[index].subtitle,
