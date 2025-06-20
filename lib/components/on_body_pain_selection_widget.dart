@@ -1,11 +1,10 @@
 // Import de pacotes e componentes necessários
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sensetal_presentation_design_app/components/concentric_rectangles_with_text.dart';
 import 'package:sensetal_presentation_design_app/components/exclusive_option_list.dart';
-import 'package:sensetal_presentation_design_app/components/app_button.dart';
-import 'package:sensetal_presentation_design_app/components/custom_slider.dart';
 import 'package:sensetal_presentation_design_app/components/last_pain_measure_widget.dart';
-import 'package:sensetal_presentation_design_app/pages/page_avaliacao_dor.dart';
+import 'package:sensetal_presentation_design_app/components/on_body_pain_selection_components/bottom_sheet.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
 import 'package:sensetal_presentation_design_app/theme/app_icons.dart';
@@ -82,6 +81,7 @@ class OnBodyPainSelectionWidget extends StatefulWidget {
 
 class _OnBodyPainSelectionWidgetState extends State<OnBodyPainSelectionWidget> {
   bool _isFrontSide = true; // Controla se mostra frente ou costas do modelo
+  String? concentricText;
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,13 @@ class _OnBodyPainSelectionWidgetState extends State<OnBodyPainSelectionWidget> {
                   ),
                 ),
               ),
-            )
+            ),
+            // Exibe o texto com a escala de dor, se disponível
+            if (concentricText != null)
+              Positioned(
+                // Defina a posição desejada
+                child: ConcentricRectangles(text: concentricText!),
+              ),
           ],
         ),
       ),
@@ -148,16 +154,24 @@ class _OnBodyPainSelectionWidgetState extends State<OnBodyPainSelectionWidget> {
 }
 
 // Widget que renderiza o modelo anatômico com os pontos clicáveis
-class ImageArea extends StatelessWidget {
+class ImageArea extends StatefulWidget {
   final String gender; // Gênero do modelo
   final bool isFrontSide; // Se mostra frente ou costas
   final List<LastPainMeasureData>? painData; // Dados históricos de dor
 
-  const ImageArea(
-      {super.key,
-      required this.gender,
-      required this.isFrontSide,
-      this.painData});
+  const ImageArea({
+    super.key,
+    required this.gender,
+    required this.isFrontSide,
+    this.painData,
+  });
+
+  @override
+  State<ImageArea> createState() => _ImageAreaState();
+}
+
+class _ImageAreaState extends State<ImageArea> {
+  List<Map<String, String>> concentricText = [];
 
   @override
   Widget build(BuildContext context) {
@@ -165,14 +179,16 @@ class ImageArea extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         // Determina parâmetros baseados no gênero
-        final bool isMale = gender == genderMaleDBName;
+        final bool isMale = widget.gender == genderMaleDBName;
         // Calcula largura da imagem (proporção do espaço disponível)
         final double maxImageWidth =
             isMale ? constraints.maxWidth * 0.42 : constraints.maxWidth * 0.4;
         // Seleciona a imagem correta baseado no gênero e lado
         final image = isMale
-            ? (isFrontSide ? AppImages.maleModelFront : AppImages.maleModelBack)
-            : (isFrontSide
+            ? (widget.isFrontSide
+                ? AppImages.maleModelFront
+                : AppImages.maleModelBack)
+            : (widget.isFrontSide
                 ? AppImages.femaleModelFront
                 : AppImages.femaleModelBack);
         // Seleciona o conjunto correto de coordenadas
@@ -190,7 +206,6 @@ class ImageArea extends StatelessWidget {
             width: imageWidth + clickAreaDiameterSize,
             height: imageHeight + 10,
             child: Stack(
-              // Permite que elementos ultrapassem os limites do Stack
               clipBehavior: Clip.none,
               children: [
                 // Imagem SVG do modelo anatômico
@@ -206,13 +221,12 @@ class ImageArea extends StatelessWidget {
                 // Gera os pontos clicáveis sobre o modelo
                 ...clickAreaCoordinates.map(
                   (pos) => Positioned(
-                    // Posiciona o ponto conforme coordenadas proporcionais
                     top: pos['top'] * imageHeight,
                     left: pos['left'] * imageWidth,
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         // Ao clicar, mostra o bottom sheet para input de dor
-                        showModalBottomSheet(
+                        final result = await showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: AppColors.neutralWhite,
@@ -225,25 +239,61 @@ class ImageArea extends StatelessWidget {
                                   getSizeFromEnum(AppSpaceSize.lg)),
                               child: PainIntensityBottomSheetContent(
                                 painAreaName: pos['label'],
-                                painData: painData ?? [],
+                                painData: widget.painData ?? [],
                               ),
                             );
                           },
                         );
+
+                        if (result != null &&
+                            result['pain'] != null &&
+                            result['label'] != null) {
+                          setState(() {
+                            concentricText.add({
+                              'pain': result['pain'],
+                              'label': result['label'],
+                            });
+                          });
+                        }
                       },
-                      // Círculo visual que representa a área clicável
                       child: Container(
+                        key: Key(pos['label']),
                         width: clickAreaDiameterSize,
                         height: clickAreaDiameterSize,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red.withOpacity(0.4),
-                          border: Border.all(color: Colors.red, width: 2),
+                          // color: Colors.red.withOpacity(0.4),
+                          // border: Border.all(color: Colors.red, width: 2),
                         ),
                       ),
                     ),
                   ),
                 ),
+                // Exibe o texto com a escala de dor, se disponível
+                ...clickAreaCoordinates.map((pos) {
+                  final painText = checkEmpty(concentricText, pos['label']);
+                  if (painText != null) {
+                    return Positioned(
+                      top: pos['top'] * imageHeight,
+                      left: pos['left'] * imageWidth,
+                      child: ConcentricRectangles(
+                        text: painText,
+                        outerColor: painText[2] == 'A'
+                            ? AppColors.error05
+                            : AppColors.info05,
+                        middleColor: painText[2] == 'A'
+                            ? AppColors.error04
+                            : AppColors.info04,
+                        innerColor: painText[2] == 'A'
+                            ? AppColors.error03
+                            : AppColors.info03,
+                        padding: 2,
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+                // Ao clicar, mostra o bottom sheet para input de dor
               ],
             ),
           ),
@@ -253,252 +303,7 @@ class ImageArea extends StatelessWidget {
   }
 }
 
-// Widget que exibe o conteúdo do bottom sheet para informar intensidade da dor
-class PainIntensityBottomSheetContent extends StatelessWidget {
-  final String painAreaName; // Nome da área de dor selecionada
-  final List<LastPainMeasureData> painData; // Dados históricos de dor
-  const PainIntensityBottomSheetContent(
-      {super.key, required this.painAreaName, required this.painData});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Título com nome da área selecionada
-        Text(
-          'Qual é o nível da dor no $painAreaName?',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-        // Container informativo sobre a dor
-        Container(
-          height: 76,
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 156, 27, 27),
-            borderRadius: AppBorderRadius.md,
-          ),
-          child: painData.isNotEmpty
-              ? const IconTextWidget(
-                  iconPath: AppIcons.systemSensetalIconSmileyMeh,
-                  text:
-                      'Dor não diária, graduada por intensidade, mais ou menos intensa.',
-                  position: 'left',
-                )
-              : const IconTextWidget(
-                  iconPath: AppIcons.systemSensetalIconArrowDown,
-                  text:
-                      'Use o slider abaixo para indicar a intensidade da dor.',
-                  position: 'left',
-                ),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-        // Slider para selecionar intensidade da dor (0-10)
-        CustomSlider(
-          min: 0,
-          max: 10,
-          activeTrackGradient: AppColors.gradientMain,
-          inactiveTrackColor: AppColors.neutral05,
-          thumbGradient: AppColors.gradientMain,
-          thumbBorderColor: const Color.fromARGB(255, 231, 232, 241),
-          thumbBorderWidth: 2,
-          thumbRadius: 12,
-          trackHeight: 8,
-          textStyle: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-        // Título da seção de recorrência
-        Text(
-          'Qual a recorrência desta dor?',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-        // Lista de opções exclusivas (aguda, crônica, etc)
-        // Se houver dados de dor, exibe todas as opções
-        // Caso contrário, exibe apenas as duas primeiras opções (aguda e crônica)
-        painData.isNotEmpty
-            ? ExclusiveOptionsList(itensList: painLevelListItems)
-            : ExclusiveOptionsList(
-                itensList: [painLevelListItems[0], painLevelListItems[1]]),
-        const VerticalSpace(size: AppSpaceSize.sm),
-
-        // Título da seção de acompanhamento
-        Text(
-          'Acompanhamento dessa dor',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-
-        // Se houver dados de dor, exibe os widgets de medida de dor
-        SizedBox(
-          child: painData.isNotEmpty
-              // Gera os widgets de medida de dor se houver histórico
-              ? (Column(children: [
-                  // Gera até 3 widgets de histórico de dor
-                  ...List.generate(
-                    // limita o numero maximo de históricos para 3
-                    painData.length < 3 ? painData.length : 3,
-                    (index) {
-                      final data = painData[index];
-                      return Column(
-                        children: [
-                          LastPainMeasureWidget(data: data),
-                          const VerticalSpace(size: AppSpaceSize.sm),
-                        ],
-                      );
-                    },
-                  ),
-                  // Container com o card de análise da equipe de fisioterapeutas
-                  Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: AppBorderRadius.md,
-                        color: AppColors.primary05),
-                    padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Título da análise
-                        Text('Análise da equipe de fisioterapeutas',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                    color: AppColors.neutral01,
-                                    fontWeight: FontWeight.w600)),
-                        const VerticalSpace(size: AppSpaceSize.xs),
-                        const Divider(),
-                        const VerticalSpace(size: AppSpaceSize.xs),
-                        // Texto com feedback para o usuário
-                        const Text(
-                            'Excelente! A intensidade da dor está diminuindo, e seu corpo está respondendo bem aos treinos. Continue praticando para viver melhor e sem dores.')
-                      ],
-                    ),
-                  ),
-                ]))
-              // Se não houver histórico, mostra mensagem informativa
-              : IconTextWidget(
-                  iconPath: AppIcons.systemSensetalIconSensetal,
-                  text:
-                      'À medida que você atualiza a intensidade da sua dor, a Sensetal faz o acompanhamento para você.',
-                  textStyle: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.neutral01),
-                ),
-        ),
-        const VerticalSpace(size: AppSpaceSize.sm),
-
-        // Botões de ação (Cancelar e Aplicar)
-        Row(
-          children: [
-            Expanded(
-              child: AppButton(
-                buttonText: 'Cancelar',
-                buttonType: AppButtonOptions.outline,
-                onPressCallback: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PageAvaliacaoDor(),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const HorizontalSpace(size: AppSpaceSize.md),
-            Expanded(
-              child: AppButton(
-                buttonText: 'Aplicar',
-                buttonType: AppButtonOptions.solid,
-                onPressCallback: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PageAvaliacaoDor(),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-// Widget utilitário que combina um ícone e texto
-class IconTextWidget extends StatelessWidget {
-  final String iconPath; // Caminho para o arquivo SVG do ícone
-  final String text; // Texto a ser exibido
-  final String? position; // Posição do ícone ('left' ou null para topo)
-  final TextStyle? textStyle; // Estilo opcional do texto
-  final bool hasDivider; // Se deve incluir um divisor
-
-  const IconTextWidget(
-      {super.key,
-      required this.iconPath,
-      required this.text,
-      this.position,
-      this.textStyle,
-      this.hasDivider = false});
-
-  @override
-  Widget build(BuildContext context) {
-    // Função que gera o ícone
-    icon() {
-      return Container(
-        width: 32,
-        height: 32,
-        padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.xxs)),
-        decoration: const BoxDecoration(
-          color: AppColors.primary04,
-          borderRadius: AppBorderRadius.sm,
-        ),
-        child: SvgPicture.asset(
-          iconPath,
-        ),
-      );
-    }
-
-    // Retorna um container com ícone e texto na orientação desejada
-    return Container(
-        decoration: const BoxDecoration(
-          color: AppColors.primary05,
-          borderRadius: AppBorderRadius.md,
-        ),
-        padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)),
-        child: position == 'left'
-            // Layout horizontal (ícone à esquerda do texto)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  icon(),
-                  const HorizontalSpace(size: AppSpaceSize.md),
-                  Expanded(
-                      child: Text(
-                    text,
-                    style: textStyle,
-                  ))
-                ],
-              )
-            // Layout vertical (ícone acima do texto)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  icon(),
-                  const VerticalSpace(size: AppSpaceSize.md),
-                  Text(
-                    text,
-                    style: textStyle,
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ));
-  }
+checkEmpty(List<Map<String, String>> concentricText, String label) {
+  return concentricText.firstWhere((element) => element['label'] == label,
+      orElse: () => {})['pain'];
 }
