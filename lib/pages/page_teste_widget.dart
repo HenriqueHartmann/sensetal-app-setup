@@ -115,8 +115,8 @@ class _PageTesteState extends State<PageTeste> {
                                     ?.copyWith(),
                               ),
                               const VerticalSpace(size: AppSpaceSize.md),
-                              LastPainMeasureWidget(
-                                  data: LastPainMeasureData(
+                              LastPainMeasure(
+                                  data: PainMeasureData(
                                       lastFivePainMeasure: lastFivePainMeasure,
                                       painScale: painScale,
                                       lastPainMeasureDate:

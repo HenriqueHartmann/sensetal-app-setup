@@ -5,7 +5,7 @@ import 'package:sensetal_presentation_design_app/components/custom_slider.dart';
 import 'package:sensetal_presentation_design_app/components/exclusive_option_list.dart';
 import 'package:sensetal_presentation_design_app/components/icon_text_widget.dart';
 import 'package:sensetal_presentation_design_app/components/last_pain_measure_widget.dart';
-import 'package:sensetal_presentation_design_app/components/on_body_pain_selection_widget.dart';
+import 'package:sensetal_presentation_design_app/components/on_body_pain_selection_components/persistent_enum.dart';
 import 'package:sensetal_presentation_design_app/pages/page_avaliacao_dor.dart';
 import 'package:sensetal_presentation_design_app/theme/app_border_radius.dart';
 import 'package:sensetal_presentation_design_app/theme/app_colors.dart';
@@ -15,7 +15,7 @@ import 'package:sensetal_presentation_design_app/utils/helper_widgets/space_widg
 
 class PainIntensityBottomSheetContent extends StatefulWidget {
   final String painAreaName; // Nome da área de dor selecionada
-  final List<LastPainMeasureData> painData; // Dados históricos de dor
+  final List<PainMeasureData> painData; // Dados históricos de dor
   const PainIntensityBottomSheetContent(
       {super.key, required this.painAreaName, required this.painData});
 
@@ -127,7 +127,7 @@ class _PainIntensityBottomSheetContentState
                       final data = widget.painData[index];
                       return Column(
                         children: [
-                          LastPainMeasureWidget(data: data),
+                          LastPainMeasure(data: data),
                           const VerticalSpace(size: AppSpaceSize.sm),
                         ],
                       );
@@ -164,7 +164,7 @@ class _PainIntensityBottomSheetContentState
               // Se não houver histórico, mostra mensagem informativa
               : const IconTextWidget(
                   iconPath: AppIcons.systemSensetalIconSensetal,
-                  iconPosition: 'up',
+                  iconPosition: 'top',
                   text:
                       'À medida que você atualiza a intensidade da sua dor, a Sensetal faz o acompanhamento para você.',
                 ),
