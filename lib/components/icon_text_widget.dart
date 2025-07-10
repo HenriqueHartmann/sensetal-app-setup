@@ -10,7 +10,7 @@ class IconTextWidget extends StatelessWidget {
   final String iconPath; // Caminho para o arquivo SVG do ícone
   final String? iconPosition; // Posição do ícone ('left' ou 'top')
   final String
-      textOnUpPosition; // Texto a ser exibido ao lado do ícone quando iconPosition for up
+      textOnUpPosition; // Texto a ser exibido ao lado do ícone quando iconPosition for top
   final String text; // Texto a ser exibido abaixo do icone
   final bool hasDivider; // Se deve incluir um divisor
 
@@ -42,71 +42,71 @@ class IconTextWidget extends StatelessWidget {
 
     // Retorna um container com ícone e texto na orientação desejada
     return Container(
-        decoration: const BoxDecoration(
-          color: AppColors.primary05,
-          borderRadius: AppBorderRadius.md,
-        ),
-        padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)),
-        child: iconPosition == 'left'
-            // Layout horizontal (ícone à esquerda do texto)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  icon(),
-                  const HorizontalSpace(size: AppSpaceSize.md),
-                  text.isNotEmpty
-                      ? Expanded(
-                          child: Text(
-                            text,
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AppColors.neutral01,
-                                    ),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ],
-              )
-            // Layout vertical (ícone acima do texto)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  textOnUpPosition.isNotEmpty
-                      ? Row(
-                          children: [
-                            icon(),
-                            const HorizontalSpace(size: AppSpaceSize.xs),
-                            Text(textOnUpPosition,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.neutral01,
-                                    )),
-                          ],
-                        )
-                      : Center(child: icon()),
-                  const VerticalSpace(size: AppSpaceSize.md),
-                  textOnUpPosition.isNotEmpty
-                      ? Text(
+      decoration: const BoxDecoration(
+        color: AppColors.primary05,
+        borderRadius: AppBorderRadius.md,
+      ),
+      padding: EdgeInsets.all(getSizeFromEnum(AppSpaceSize.md)),
+      child: iconPosition == 'left'
+          // Layout horizontal (ícone à esquerda do texto)
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                icon(),
+                const HorizontalSpace(size: AppSpaceSize.md),
+                text.isNotEmpty
+                    ? Expanded(
+                        child: Text(
                           text,
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: AppColors.neutral01,
                                   ),
-                        )
-                      : Center(
-                          child: Text(
-                            text,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: AppColors.neutral01,
-                                    ),
-                          ),
-                        )
-                ],
-              ));
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            )
+          // Layout vertical (ícone acima do texto)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textOnUpPosition.isNotEmpty
+                    ? Row(
+                        children: [
+                          icon(),
+                          const HorizontalSpace(size: AppSpaceSize.xs),
+                          Text(textOnUpPosition,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: AppColors.neutral01,
+                                  )),
+                        ],
+                      )
+                    : Center(child: icon()),
+                const VerticalSpace(size: AppSpaceSize.md),
+                textOnUpPosition.isNotEmpty
+                    ? Text(
+                        text,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppColors.neutral01,
+                            ),
+                      )
+                    : Center(
+                        child: Text(
+                          text,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: AppColors.neutral01,
+                                  ),
+                        ),
+                      )
+              ],
+            ),
+    );
   }
 }
